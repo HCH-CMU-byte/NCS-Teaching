@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>偏頭痛治療近五年進展（2020–2025）</title>
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --border: #e2ddd6;
+    --text-primary: #1a1814;
+    --text-secondary: #5a5550;
+    --accent: #2d5a8e;
+    --accent-light: #e8f0f9;
+    --accent2: #7a3b6e;
+    --accent2-light: #f5edf4;
+    --green: #2a6b4a;
+    --green-light: #eaf3ee;
+    --orange: #b05a1a;
+    --orange-light: #fdf0e6;
+    --red: #8e2d2d;
+    --red-light: #fdf0f0;
+    --gold: #8a6d1a;
+    --gold-light: #fdf8e6;
+    --font-sans: 'Helvetica Neue', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    --font-mono: 'SF Mono', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* Header */
+  .hero {
+    background: var(--accent);
+    color: #fff;
+    padding: 48px 40px 40px;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Layout */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 36px 24px 60px;
+  }
+
+  /* Evidence legend */
+  .legend {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .legend h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+  .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 24px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .ev-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ev-A { background: #2a6b4a; color: #fff; }
+  .ev-B { background: #2d5a8e; color: #fff; }
+  .ev-C { background: #8a6d1a; color: #fff; }
+  .ev-D { background: #7a3b6e; color: #fff; }
+  .ev-I  { background: #1a1814; color: #fff; }
+  .ev-II { background: #5a5550; color: #fff; }
+  .ev-III{ background: #9a9490; color: #fff; }
+  .ev-NE { background: #c8c4be; color: #444; }
+
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .section-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+  }
+
+  /* Sub-section */
+  .subsection {
+    margin-bottom: 24px;
+  }
+  .subsection-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .subsection-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent-light);
+    margin-left: 4px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+  }
+  .card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .card-ev-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .card-body {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .card-body ul {
+    padding-left: 18px;
+    margin-top: 6px;
+  }
+  .card-body li {
+    margin-bottom: 3px;
+  }
+  .card-body strong {
+    color: var(--text-primary);
+  }
+  .ref {
+    font-size: 11.5px;
+    color: #8a8480;
+    font-style: italic;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* Color variants */
+  .card.blue  { border-left: 4px solid var(--accent); }
+  .card.green { border-left: 4px solid var(--green); }
+  .card.purple{ border-left: 4px solid var(--accent2); }
+  .card.orange{ border-left: 4px solid var(--orange); }
+  .card.gold  { border-left: 4px solid var(--gold); }
+  .card.red   { border-left: 4px solid var(--red); }
+
+  /* New drug highlight */
+  .new-tag {
+    display: inline-block;
+    background: #e8f9f0;
+    color: #1a6b3a;
+    border: 1px solid #b0dfc0;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+  .tw-tag {
+    display: inline-block;
+    background: #fdf0e6;
+    color: #9a4a10;
+    border: 1px solid #f0c890;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    letter-spacing: 0.05em;
+    margin-left: 6px;
+  }
+
+  /* Summary table */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .summary-table th {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .summary-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .summary-table tr:nth-child(even) td { background: #faf9f7; }
+  .summary-table tr:last-child td { border-bottom: none; }
+
+  /* Alert box */
+  .alert {
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    margin-bottom: 14px;
+  }
+  .alert.info   { background: var(--accent-light); border-left: 4px solid var(--accent); }
+  .alert.tw     { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .alert strong { color: var(--text-primary); }
+
+  /* Footer */
+  .doc-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+    padding-top: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 22px; }
+    .container { padding: 24px 16px 48px; }
+    .legend-grid { grid-template-columns: 1fr; }
+    .summary-table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Clinical Education · Neurology</div>
+  <h1>偏頭痛治療近五年重要進展<br>2020–2025</h1>
+  <div class="hero-sub">依台灣頭痛學會（2022準則）、美國頭痛學會（AHS 2024共識）及國際頭痛學會（IHS）建議彙整<br>
+  涵蓋急性治療、預防性治療、非藥物、營養補充與運動介入，附實證等級標示</div>
+  <div class="hero-badges">
+    <span class="badge">急性藥物</span>
+    <span class="badge">預防藥物</span>
+    <span class="badge">神經調節</span>
+    <span class="badge">認知行為介入</span>
+    <span class="badge">運動處方</span>
+    <span class="badge">營養補充</span>
+    <span class="badge">飲食管理</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Evidence Legend -->
+  <div class="legend">
+    <h3>實證等級說明（台灣頭痛學會 / AAN 分級）</h3>
+    <div class="legend-grid">
+      <div class="legend-item">
+        <span class="ev-badge ev-A">A</span>
+        <span>強力推薦：多項一致性 RCT 或 meta-analysis 支持</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-B">B</span>
+        <span>推薦：部分 RCT 支持，方法學尚可</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-C">C</span>
+        <span>可考慮：主要來自觀察性研究或小型 RCT</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-D">D</span>
+        <span>不建議 / 證據不足：現有研究顯示無效或害處</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-I">I 線</span>
+        <span>第一線推薦用藥</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-II">II 線</span>
+        <span>第二線推薦用藥</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-III">III 線</span>
+        <span>第三線或替代選擇</span>
+      </div>
+      <div class="legend-item">
+        <span class="ev-badge ev-NE">NE</span>
+        <span>台灣尚未核准 / 健保未給付</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 1: ACUTE DRUG ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f0f9;">💊</div>
+      <div>
+        <div class="section-title">一、急性發作藥物治療</div>
+        <div class="section-sub">Acute Pharmacotherapy</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <strong>重要更新：</strong>台灣頭痛學會 2022 年急性治療準則確立 Triptans 仍為第一線偏頭痛特異性急性治療；
+      新型 CGRP 拮抗劑（Gepants）與 5-HT1F 促效劑（Ditans）在歐美已核准，台灣尚在引進中。
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">傳統藥物（仍為台灣主力）</div>
+
+      <div class="card blue">
+        <div class="card-head">
+          <div class="card-title">Triptans（翠普登）— 口服 / 鼻噴劑<span class="ev-badge ev-I" style="margin-left:8px">I 線</span></div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span></div>
+        </div>
+        <div class="card-body">
+          Sumatriptan, zolmitriptan, rizatriptan 等為台灣目前偏頭痛特異性急性藥物首選。多項 meta-analysis 顯示 2 小時疼痛緩解率達 50–70%。
+          <ul>
+            <li><strong>原則：</strong>輕中度頭痛可先試 NSAID；中重度或NSAID 無效者直接用 triptan</li>
+            <li><strong>注意：</strong>每月使用上限 ≤10 天，避免藥物過度使用性頭痛（MOH）</li>
+            <li><strong>禁忌：</strong>缺血性心臟病、中風、未控制高血壓、偏癱性偏頭痛</li>
+          </ul>
+          <span class="ref">台灣頭痛學會 2022 急性治療準則 Acta Neurol Taiwan 2022;31:89-113</span>
+        </div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-head">
+          <div class="card-title">NSAIDs / Acetaminophen — 非偏頭痛特異性</div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span><span class="ev-badge ev-I">I 線</span></div>
+        </div>
+        <div class="card-body">
+          Ibuprofen 400–800 mg、Naproxen 500–1000 mg、Aspirin 900–1000 mg 對輕中度偏頭痛有效（NNT ≈ 4–6）。
+          Acetaminophen 1000 mg 效果較弱，可於 NSAID 禁忌時使用。
+          <ul>
+            <li>長期服用 NSAIDs 需注意胃腸道與腎臟副作用</li>
+            <li>與止吐劑（如 metoclopramide）合併使用可改善吸收並控制噁心</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">新型藥物（近五年重大突破）</div>
+
+      <div class="card green">
+        <div class="card-head">
+          <div class="card-title">
+            Gepants — 口服 CGRP 受體拮抗劑
+            <span class="new-tag">新藥</span>
+            <span class="tw-tag">台灣引進中</span>
+          </div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span><span class="ev-badge ev-NE">NE</span></div>
+        </div>
+        <div class="card-body">
+          <strong>Rimegepant（Nurtec ODT）</strong>75 mg 口溶錠、<strong>Ubrogepant（Ubrelvy）</strong>50/100 mg、<strong>Zavegepant（Zavzpret）</strong>10 mg 鼻噴劑（2023 年 FDA 核准，首款鼻用 gepant）。
+          <ul>
+            <li>不收縮血管，可用於心血管禁忌的 triptan 使用者</li>
+            <li>2小時疼痛緩解率 60–70%（vs. placebo 30–40%）；疼痛完全消失率約 20–25%</li>
+            <li><strong>雙效藥：</strong>Rimegepant 同時獲准用於預防性治療（每隔日一顆）</li>
+            <li>不易誘發 MOH，無中樞神經鎮靜副作用</li>
+          </ul>
+          <span class="ref">Lancet Neurol. 2023;22(3):209-217（Zavegepant Phase 3）；AHS Consensus 2024</span>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-head">
+          <div class="card-title">
+            Lasmiditan（Reyvow）— 5-HT<sub>1F</sub> 促效劑（Ditan）
+            <span class="new-tag">新藥</span>
+            <span class="tw-tag">台灣引進中</span>
+          </div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span><span class="ev-badge ev-NE">NE</span></div>
+        </div>
+        <div class="card-body">
+          100 mg / 200 mg 口服，FDA 2019 年核准（SAMURAI & SPARTAN 試驗）。不造成血管收縮，可用於心血管高風險患者。
+          <ul>
+            <li>主要副作用：頭暈（15–20%）、感覺異常、嗜睡</li>
+            <li><strong>重要限制：</strong>服藥後 8 小時不得駕車；有藥物濫用潛力，列管為 Schedule V</li>
+            <li>Network meta-analysis（18 RCTs, n=22,429）顯示 lasmiditan 2 小時疼痛緩解率優於 ubrogepant/zavegepant</li>
+          </ul>
+          <span class="ref">PMC10840250 — NMA Lasmiditan vs CGRP-Antagonists, 2024</span>
+        </div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-head">
+          <div class="card-title">急診室靜脈注射藥物 — 2025 AHS 準則更新</div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span></div>
+        </div>
+        <div class="card-body">
+          AHS 於 2025 年更新急診偏頭痛靜脈用藥指引（擴增至神經阻斷術）：
+          <ul>
+            <li><strong>IV Metoclopramide / Prochlorperazine：</strong>一線靜脈止頭痛藥（Level A）</li>
+            <li><strong>IV Valproate sodium：</strong>有效替代選項（Level A）</li>
+            <li><strong>Ketorolac IM：</strong>快速有效（Level A）</li>
+            <li><strong>蝶顎神經節（SPG）阻斷術：</strong>新納入，對難治性偏頭痛具短期緩解效果</li>
+            <li><strong>上頸部神經阻斷術：</strong>新增納入推薦（Level B）</li>
+          </ul>
+          <span class="ref">Robblee et al., Headache 2025 (AHS ED guideline update); doi:10.1111/head.70016</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: PREVENTIVE DRUG ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#eaf3ee;">🛡️</div>
+      <div>
+        <div class="section-title">二、預防性藥物治療</div>
+        <div class="section-sub">Preventive Pharmacotherapy — 近五年最重大突破區</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <strong>2024 AHS 里程碑共識：</strong>CGRP 標靶療法（單株抗體 + Gepants）正式列為「第一線」預防性治療選項，
+      不再需要先嘗試傳統藥物失敗才能使用。（Charles et al., Headache 2024;64:333-341）
+    </div>
+
+    <div class="alert tw">
+      <strong>台灣現況：</strong>台灣頭痛學會 2022 準則仍將 CGRP 單株抗體列為陣發性偏頭痛「第二線」、慢性偏頭痛「第一線」；
+      健保給付條件受限，臨床醫師須參照最新歐美準則與健保規範雙軌考量。
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">傳統預防藥物（台灣第一線）</div>
+
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>藥物</th>
+            <th>使用指引</th>
+            <th>推薦等級</th>
+            <th>注意事項</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Propranolol</strong><br>40–240 mg/day</td>
+            <td>陣發性偏頭痛 I 線</td>
+            <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線</span></td>
+            <td>哮喘、心搏過慢禁忌；可能加重憂鬱</td>
+          </tr>
+          <tr>
+            <td><strong>Flunarizine</strong><br>5–10 mg/day</td>
+            <td>陣發性與慢性偏頭痛 I 線（台灣常用）</td>
+            <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線</span></td>
+            <td>巴金森病禁忌；體重增加、嗜睡</td>
+          </tr>
+          <tr>
+            <td><strong>Topiramate</strong><br>25–100 mg/day</td>
+            <td>陣發性與慢性偏頭痛 I 線</td>
+            <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線</span></td>
+            <td>認知副作用（腦霧）；腎結石；懷孕禁忌</td>
+          </tr>
+          <tr>
+            <td><strong>Valproic acid</strong><br>500–1500 mg/day</td>
+            <td>陣發性偏頭痛 II 線</td>
+            <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-II">II 線</span></td>
+            <td>孕婦絕對禁忌（致畸）；體重增加、肝毒性</td>
+          </tr>
+          <tr>
+            <td><strong>Amitriptyline</strong><br>10–75 mg/day</td>
+            <td>陣發性偏頭痛 II 線；合併失眠或焦鬱首選</td>
+            <td><span class="ev-badge ev-B">B</span> <span class="ev-badge ev-II">II 線</span></td>
+            <td>抗膽鹼副作用；QT 延長；嗜睡</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">CGRP 單株抗體（Anti-CGRP mAbs）— 近五年最核心進展</div>
+
+      <div class="card green">
+        <div class="card-head">
+          <div class="card-title">
+            四種 CGRP 單株抗體概覽
+            <span class="new-tag">突破性進展</span>
+          </div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span><span class="ev-badge ev-I">I 線（CM）</span></div>
+        </div>
+        <div class="card-body">
+          <table class="summary-table" style="margin-top:0">
+            <thead>
+              <tr><th>藥物</th><th>標靶</th><th>給藥</th><th>適應症</th><th>台灣</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Erenumab</strong>（Aimovig）</td>
+                <td>CGRP 受體</td>
+                <td>70/140 mg 皮下/月</td>
+                <td>EM + CM</td>
+                <td>已核准</td>
+              </tr>
+              <tr>
+                <td><strong>Fremanezumab</strong>（Ajovy）</td>
+                <td>CGRP 配體</td>
+                <td>225 mg/月 或 675 mg/季</td>
+                <td>EM + CM</td>
+                <td>已核准</td>
+              </tr>
+              <tr>
+                <td><strong>Galcanezumab</strong>（Emgality）</td>
+                <td>CGRP 配體</td>
+                <td>120 mg/月</td>
+                <td>EM + CM + CH</td>
+                <td>已核准</td>
+              </tr>
+              <tr>
+                <td><strong>Eptinezumab</strong>（Vyepti）</td>
+                <td>CGRP 配體</td>
+                <td>100/300 mg IV/季</td>
+                <td>EM + CM</td>
+                <td>引進中</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul style="margin-top:10px">
+            <li><strong>效果：</strong>平均減少每月頭痛天數 3–5 天；≥50% 反應率約 40–60%</li>
+            <li><strong>長期安全性（2023–2024 real-world data）：</strong>12 個月持續性良好，耐受性優於傳統藥物；便秘（erenumab）、注射部位反應為主要副作用</li>
+            <li><strong>AHS 2024：</strong>正式列為「first-line」，不需要先試其他預防藥物失敗</li>
+            <li><strong>系統性回顧（Bayesian NMA, 2024）：</strong>四種抗體在慢性偏頭痛均優於安慰劑，效果相近</li>
+          </ul>
+          <span class="ref">Charles et al., Headache 2024;64:333-341（AHS Consensus）；PMC11861264（2024 update review）；PMC10811399（Bayesian NMA, 2024）</span>
+        </div>
+      </div>
+
+      <div class="card green">
+        <div class="card-head">
+          <div class="card-title">
+            Gepants 口服預防藥 — 雙效新選項
+            <span class="new-tag">新藥</span>
+          </div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span><span class="ev-badge ev-NE">NE</span></div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Atogepant（Qulipta）</strong>60 mg/day：口服，FDA 2021 核准預防用，ADVANCE 試驗顯示≥50% 反應率達 61%</li>
+            <li><strong>Rimegepant（Nurtec ODT）</strong>75 mg 每隔日：兼具急性與預防雙效，FDA 2021 核准預防適應症</li>
+            <li>Network meta-analysis（Phase 3 RCTs 統合，Haghdoost et al., 2023）：兩者均顯著優於安慰劑</li>
+            <li>優勢：口服方便、無注射、心血管安全性佳、可即時作為急性治療用</li>
+          </ul>
+          <span class="ref">Haghdoost et al., Cephalalgia 2023 (NMA of CGRP mAbs and gepants)；AHS 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">肉毒桿菌素（OnabotulinumtoxinA / Botox）</div>
+
+      <div class="card purple">
+        <div class="card-head">
+          <div class="card-title">PREEMPT 方案注射 — 慢性偏頭痛專用</div>
+          <div class="card-ev-row"><span class="ev-badge ev-A">A</span><span class="ev-badge ev-I">I 線（CM）</span></div>
+        </div>
+        <div class="card-body">
+          155–195 U 注射於頭、頸、肩 31–39 個位點，每 12 週重複。台灣已核准慢性偏頭痛適應症。
+          <ul>
+            <li>慢性偏頭痛最多月 ≥15 天頭痛且≥8 天為偏頭痛者</li>
+            <li>平均減少每月頭痛天數 8–9 天（vs. placebo 6–7 天）</li>
+            <li>與 CGRP 單株抗體可合併使用（難治性慢性偏頭痛）</li>
+          </ul>
+          <span class="ref">台灣頭痛學會 2022 準則；PREEMPT 1&2 trials, Cephalalgia 2010</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">月經性偏頭痛短期預防</div>
+      <div class="card blue">
+        <div class="card-head">
+          <div class="card-title">NSAIDs / Triptans 短期預防（Mini-prophylaxis）</div>
+          <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+        </div>
+        <div class="card-body">
+          月經前 2 天至月經後 3–5 天（共 5–7 天）使用 Naproxen 500 mg bid 或 Frovatriptan 2.5 mg qd–bid，可顯著減少月經性偏頭痛頻率。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: NEUROMODULATION ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f5edf4;">⚡</div>
+      <div>
+        <div class="section-title">三、非侵入性神經調節治療</div>
+        <div class="section-sub">Non-invasive Neuromodulation Devices</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <strong>IHS 2025 循證指引：</strong>國際頭痛學會正式發布非侵入性神經調節裝置循證指引（Yuan et al., Cephalalgia 2025），
+      系統性評估六種 FDA 核准裝置之急性與預防效果。AHS 共識同樣支持作為單一或輔助療法。
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">外部三叉神經刺激器（e-TNS；Cefaly）— 前額貼附</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        FDA 核准急性與預防性偏頭痛用途。PREMIUM 雙盲試驗（預防）顯示月頭痛天數顯著下降。
+        急性用：發作時 60 分鐘高頻刺激；預防用：每日睡前 20 分鐘低頻模式。
+        <ul>
+          <li>無系統性副作用，皮膚刺激感偶見</li>
+          <li>可合併藥物使用</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">非侵入性迷走神經刺激（nVNS；GammaCore）— 頸部貼敷</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        FDA 2018 核准急性偏頭痛；系統性回顧與 meta-analysis（Song et al., 2023；5 RCTs）顯示急性期 2 小時疼痛緩解率改善（RR 1.35）。
+        叢發性頭痛急性治療有 Level A 證據。
+        <ul>
+          <li>預防性效果：PREMIUM trial（陣發性偏頭痛）月頭痛天數顯著減少</li>
+          <li>操作簡便，副作用少（頸部不適、輕微噁心）</li>
+        </ul>
+        <span class="ref">Song et al., Front Neurol 2023 (Cochrane-based SR & meta-analysis)</span>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">單脈衝穿顱磁刺激（sTMS；SAVI）— 後枕部手持</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        FDA 核准有預兆偏頭痛急性治療（REST 試驗）及預防使用。
+        <ul>
+          <li>急性：在預兆期或頭痛初期施用兩次磁脈衝</li>
+          <li>預防：每日早晚各 2 次</li>
+          <li>懷孕安全性不確定；有癲癇者慎用</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">遠端電性神經調節（REN；Nerivio）— 上臂穿戴</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        FDA 核准急性（2019）與預防（2021）偏頭痛治療。透過 App 控制，45 分鐘電刺激。
+        <ul>
+          <li>三期 RCT 顯示急性 2 小時疼痛自由率優於假裝置（p&lt;0.001）</li>
+          <li>Real-world 資料顯示慢性偏頭痛月頭痛天數下降約 4 天</li>
+          <li>台灣目前仍屬研究性質引進</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">蝶顎神經節（SPG）阻斷術 — 急診/頑固性偏頭痛</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        AHS 2025 急診指引新納入。經鼻導管或細針至 SPG 注射局部麻醉（lidocaine），急診適用。
+        <ul>
+          <li>30–60 分鐘疼痛緩解率約 60%</li>
+          <li>用於對靜脈藥物反應不佳或禁忌者</li>
+        </ul>
+        <span class="ref">AHS ED Guideline Update 2025, Headache doi:10.1111/head.70016</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: BEHAVIORAL ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdf0e6;">🧠</div>
+      <div>
+        <div class="section-title">四、行為與心理介入</div>
+        <div class="section-sub">Behavioral & Psychological Interventions</div>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-head">
+        <div class="card-title">認知行為治療（CBT）</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        2025 年 AHS 發表最大規模系統回顧（50 RCTs, N=6024 成人；Treadwell et al., Headache 2025）：
+        <ul>
+          <li>CBT、放鬆訓練、正念療法（Mindfulness）三者均可顯著減少頭痛發作頻率（Strength of Evidence: Low）</li>
+          <li>正念療法在改善偏頭痛失能（disability）方面優於單純衛教</li>
+          <li>放鬆訓練 + 衛教在生活品質改善優於 propranolol</li>
+          <li><strong>兒童：</strong>CBT + biofeedback + 放鬆三合一組合可減少頭痛頻率（SOE: Low）</li>
+        </ul>
+        <span class="ref">Treadwell et al., Headache 2025 (SR & meta-analysis, 50 RCTs)</span>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-head">
+        <div class="card-title">生理回饋（Biofeedback）</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        2025 年 meta-analysis（PubMed/Embase 至 2024，Sciencedirect 2025）：
+        <ul>
+          <li>vs. 等待組：頭痛頻率顯著下降（統計顯著）</li>
+          <li>vs. 藥物 / CBT 主動比較：無顯著差異 → 效果相當</li>
+          <li>包含 EMG biofeedback（肌電回饋）、皮溫回饋、HRV 回饋等模式</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-head">
+        <div class="card-title">正念為基礎的壓力減輕（MBSR）/ 正念冥想</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        Wells et al. RCT（JAMA IM 2021）：MBSR 8 週課程 vs. 衛教，偏頭痛失能評分（MIDAS）顯著改善。
+        正念療法（mindfulness-based therapies）在 AHS 2025 SR 中被確認可減少頭痛發作頻率。
+        <ul>
+          <li>每週建議靜坐練習 ≥15–20 分鐘以維持效果</li>
+          <li>可透過手機 App（如 Calm、Headspace 等）輔助施行</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card orange">
+      <div class="card-head">
+        <div class="card-title">數位治療（Digital Therapeutics）— 最新趨勢</div>
+        <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+      </div>
+      <div class="card-body">
+        以 App 為基礎的 CBT（digital CBT）及 AI 驅動頭痛日記（如 Migraine Buddy、Bezwoda app 等）用於行為管理，
+        多項臨床試驗進行中（NCT05853900）。目前證據仍屬 pilot 階段。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5: EXERCISE ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#eaf3ee;">🏃</div>
+      <div>
+        <div class="section-title">五、運動介入</div>
+        <div class="section-sub">Exercise Prescription for Migraine Prevention</div>
+      </div>
+    </div>
+
+    <div class="card green">
+      <div class="card-head">
+        <div class="card-title">有氧運動 — 劑量-反應關係（最新 meta-analysis）</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        <strong>Ogrezeanu et al., Headache 2026（15 RCTs, N=253）：</strong>
+        <ul>
+          <li>有氧運動顯著降低疼痛強度（SMD −1.1；95% CI −1.72 to −0.47）</li>
+          <li><strong>劑量-反應呈 U 型曲線</strong>：最小有效劑量 200 分鐘（總累積），最大效益於 900 分鐘</li>
+          <li>建議：每週 3 次、每次 40–50 分鐘、中等強度（60–80% HRmax）有氧運動</li>
+        </ul>
+        <strong>Varkey et al. 里程碑試驗（Cephalalgia 2011，常被引用）：</strong>有氧運動效果等同 topiramate 或放鬆訓練。
+        <span class="ref">Ogrezeanu et al., Headache 2026; doi:10.1111/head.15070</span>
+      </div>
+    </div>
+
+    <div class="card green">
+      <div class="card-head">
+        <div class="card-title">最佳運動模式比較（2025 Network Meta-Analysis）</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        <strong>PeerJ 2025（27 RCTs, N=1,611；ML-NMA）：</strong>
+        <table class="summary-table" style="margin-top:8px">
+          <thead>
+            <tr><th>運動模式</th><th>效果大小（g）</th><th>SUCRA 排名</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>有氧 + 阻力訓練合併</td><td>−1.85（最強）</td><td>91%</td></tr>
+            <tr><td>阻力訓練（Resistance）</td><td>−1.45</td><td>81%</td></tr>
+            <tr><td>太極</td><td>−0.48</td><td>46%</td></tr>
+            <tr><td>瑜珈（Yoga）</td><td>−0.35</td><td>49%</td></tr>
+            <tr><td>純有氧</td><td>−0.84</td><td>中等</td></tr>
+          </tbody>
+        </table>
+        <ul style="margin-top:8px">
+          <li><strong>最佳治療窗口：</strong>300–600 MET-min/週、強度 4.5–5.5 METs、持續 8–10 週</li>
+          <li>整體證據品質屬「很低至低」，需更多高品質 RCT</li>
+        </ul>
+        <span class="ref">PMC12548639 — PeerJ 2025 (ML-NMA, 27 RCTs)</span>
+      </div>
+    </div>
+
+    <div class="card green">
+      <div class="card-head">
+        <div class="card-title">臨床運動建議整合</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        <ul>
+          <li><strong>首選：</strong>有氧 + 阻力訓練合併，每週至少 3 次</li>
+          <li><strong>類型：</strong>快走、騎車、游泳、慢跑（避免過度劇烈以防誘發頭痛）</li>
+          <li><strong>強度：</strong>中等強度（可說話但微喘）；避免高強度爆發初期</li>
+          <li><strong>開始方式：</strong>循序漸進（先 10–15 分鐘，每週增加 5 分鐘）</li>
+          <li><strong>補水：</strong>運動前後充分補水（脫水是偏頭痛誘發因子）</li>
+          <li><strong>機制：</strong>↑ β-endorphin、↓ CGRP 濃度、↑ 血清素、改善睡眠品質</li>
+        </ul>
+        <span class="ref">American Migraine Foundation 2024；AHS Consensus</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 6: NUTRITION ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdf8e6;">🥗</div>
+      <div>
+        <div class="section-title">六、營養補充與飲食管理</div>
+        <div class="section-sub">Nutraceuticals & Dietary Interventions</div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <strong>資料來源：</strong>Curr Pain Headache Rep 2025（Nutraceuticals update）；Frontiers Nutrition 2024；台灣頭痛學會 2022 準則（輔助療法章節）
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">核心三大補充劑（有最多實證）</div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">鎂（Magnesium）</div>
+          <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>口服預防：</strong>每日 400–600 mg（氧化鎂、檸檬酸鎂、甘胺酸鎂），多項 meta-analysis 顯示顯著降低發作頻率</li>
+            <li><strong>靜脈鎂：</strong>急性偏頭痛急診用（1–2 g IV MgSO₄），對有預兆偏頭痛或月經性偏頭痛尤佳（Level B）</li>
+            <li>副作用：腹瀉（常見，可換劑型）；嚴重腎功能不全慎用</li>
+            <li><strong>加拿大頭痛學會：</strong>明確推薦為偏頭痛預防補充劑</li>
+          </ul>
+          <span class="ref">Curr Pain Headache Rep 2025（Nutraceuticals review）；台灣頭痛學會 2022</span>
+        </div>
+      </div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">核黃素（維生素 B2 / Riboflavin）</div>
+          <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>劑量：</strong>400 mg/day（每日單次），至少服用 3 個月觀察效果</li>
+            <li>機制：改善粒線體能量代謝（偏頭痛之粒線體假說）</li>
+            <li>多項 RCT 顯示每月頭痛天數減少約 2 天；副作用極少（尿液變橙黃色）</li>
+            <li><strong>兒科：</strong>2024 年系統回顧（17 項研究）顯示對兒童亦有潛力，但需更多 RCT</li>
+            <li><strong>AHS 建議：</strong>可作為偏頭痛預防性補充劑（nutraceutical option）</li>
+          </ul>
+          <span class="ref">Curr Pain Headache Rep 2025；PMC12420874（Pediatric riboflavin SR 2024）</span>
+        </div>
+      </div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">輔酶 Q10（Coenzyme Q10, CoQ10）</div>
+          <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>劑量：</strong>100–400 mg/day，持續 3 個月</li>
+            <li>2021 年 meta-analysis（6 RCTs）：顯著降低頭痛頻率與持續時間，但疼痛強度改善不顯著</li>
+            <li>機制：抗氧化、↓ TNF-α、↓ CGRP（一項 RCT 顯示抗炎效果）</li>
+            <li>副作用少，安全性佳；可考慮用於兒童青少年偏頭痛（CoQ10 缺乏比例高）</li>
+            <li>加拿大頭痛學會與 AHS 均認可為可選補充劑（Level C）</li>
+          </ul>
+          <span class="ref">Curr Pain Headache Rep 2025；Frontiers Nutr 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">其他補充劑</div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">褪黑素（Melatonin）</div>
+          <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+        </div>
+        <div class="card-body">
+          3 mg 睡前。Curr Pain Headache Rep 2025：整體證據極低（very low certainty）；合併睡眠障礙的偏頭痛患者可弱推薦。
+          叢發性頭痛有較強的預防證據。
+        </div>
+      </div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">小白菊（Feverfew）</div>
+          <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+        </div>
+        <div class="card-body">
+          50–100 mg/day（乾燥葉萃取）。RCT 證據品質差異大；Curr Pain Headache Rep 2025 強調安全性研究不足，
+          不同製劑差異大，建議謹慎推薦。禁忌：懷孕（可能誘發子宮收縮）。
+        </div>
+      </div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">維生素 D</div>
+          <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+        </div>
+        <div class="card-body">
+          觀察性研究發現偏頭痛患者維生素 D 缺乏比例較高。一項 2023 RCT（Alipouri et al.）顯示補充維生素 D 合併有氧運動可改善偏頭痛合併焦慮症狀。
+          目前 RCT 證據尚不充分，建議先行檢測血中 25-OH-D 濃度再考慮補充。
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">飲食策略</div>
+
+      <div class="card gold">
+        <div class="card-head">
+          <div class="card-title">一般飲食原則</div>
+          <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>規律進食：</strong>避免跳餐，低血糖是常見誘發因子</li>
+            <li><strong>充分補水：</strong>每日至少 1.5–2 L；脫水明確與偏頭痛相關</li>
+            <li><strong>咖啡因：</strong>適量（≤200 mg/day）可輔助急性緩解，過量或突然停咖啡因可誘發頭痛</li>
+            <li><strong>可能誘發食物（個別化）：</strong>紅酒/酒精（酪胺酸、組織胺）、陳年乳酪、加工肉品（亞硝酸鹽）、味精（MSG）、人工甘味劑（阿斯巴甜）、巧克力</li>
+            <li><strong>飲食品質：</strong>2024 橫斷面研究（Eur J Nutr）顯示較高飲食品質分數與偏頭痛頻率下降相關</li>
+            <li><strong>ω-3 / ω-6 比例：</strong>高 ω-3（深海魚）飲食模式與降低頭痛頻率有關聯（pilot RCT 支持）</li>
+          </ul>
+          <span class="ref">Balali et al., Nutr Neurosci 2024；Frontiers Nutr 2024（practical supplements review）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 7: ACUPUNCTURE ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f5edf4;">📌</div>
+      <div>
+        <div class="section-title">七、針灸與手法治療</div>
+        <div class="section-sub">Acupuncture & Manual Therapy</div>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">針灸（Acupuncture）</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        Cochrane 系統回顧（2016 更新）及多國頭痛指引均認可針灸作為偏頭痛預防選項。
+        <ul>
+          <li>多項 RCT 顯示效果等同 topiramate，且副作用更少</li>
+          <li>2025 年針對全球指引的系統回顧（8-1）指出：多數指引對針灸的推薦品質仍不足，僅 4% 的指引達高品質推薦</li>
+          <li>台灣衛生福利部核准針灸用於頭痛；經濟效益分析顯示預防性針灸優於無治療</li>
+          <li><strong>台灣頭痛學會 2022：</strong>列入輔助與替代療法（CAM），作為不耐受藥物或拒絕藥物者之替代選擇</li>
+        </ul>
+        <span class="ref">PMC12578527（acupuncture guideline SR, 2025）；台灣頭痛學會 2022</span>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-head">
+        <div class="card-title">手法治療（Manual Therapy）/ 脊椎徒手治療</div>
+        <div class="card-ev-row"><span class="ev-badge ev-C">C</span></div>
+      </div>
+      <div class="card-body">
+        2024 年 meta-analysis：對頸因性頭痛效果大（SMD −2.01），張力型頭痛中等（SMD −0.86），
+        偏頭痛效果依合併頸椎功能障礙而定。
+        <ul>
+          <li>有頸部肌筋膜壓痛或頸因性成分的偏頭痛患者較可能受益</li>
+          <li>物理治療（頸椎鬆動術、激痛點治療）可作為輔助療法</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 8: LIFESTYLE ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f8f7f4;">🌙</div>
+      <div>
+        <div class="section-title">八、生活型態管理</div>
+        <div class="section-sub">Lifestyle & Trigger Management</div>
+      </div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-head">
+        <div class="card-title">睡眠規律化</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        睡眠不足與過長均為偏頭痛誘發因子。固定就寢與起床時間（含週末）、避免日間補眠過長。
+        合併失眠者可考慮 CBT for Insomnia（CBT-I）。
+      </div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-head">
+        <div class="card-title">壓力管理與誘因日記</div>
+        <div class="card-ev-row"><span class="ev-badge ev-B">B</span></div>
+      </div>
+      <div class="card-body">
+        使用頭痛日記（紙本或 App）記錄誘發因子（壓力、天氣、荷爾蒙、食物、睡眠）。
+        了解個人化誘因後可精準迴避，研究顯示提升自我效能感，降低失能程度。
+      </div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-head">
+        <div class="card-title">急性藥物過度使用教育（MOH 預防）</div>
+        <div class="card-ev-row"><span class="ev-badge ev-A">A</span></div>
+      </div>
+      <div class="card-body">
+        所有偏頭痛患者均應衛教：
+        <ul>
+          <li>止痛藥（Triptans、NSAIDs、乙醯氨酚）月使用上限分別 ≤10 天 / ≤15 天 / ≤15 天</li>
+          <li>複方止痛藥使用 ≤10 天/月</li>
+          <li>超過上限 ≥3 個月即符合 MOH 診斷，需轉介或加強預防性治療</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Summary Table -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f0f9;">📋</div>
+      <div>
+        <div class="section-title">九、快速查閱表：各類治療實證等級彙整</div>
+        <div class="section-sub">依台灣頭痛學會 2022 準則 + 2024–2025 國際最新更新</div>
+      </div>
+    </div>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>治療類型</th>
+          <th>主要代表</th>
+          <th>適應症</th>
+          <th>實證等級</th>
+          <th>台灣可用性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>急性：Triptans</strong></td>
+          <td>Sumatriptan, Rizatriptan 等</td>
+          <td>急性發作</td>
+          <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線</span></td>
+          <td>✅ 健保給付</td>
+        </tr>
+        <tr>
+          <td><strong>急性：Gepants（口服）</strong></td>
+          <td>Ubrogepant, Rimegepant</td>
+          <td>急性發作（心血管禁忌首選）</td>
+          <td><span class="ev-badge ev-A">A</span></td>
+          <td>⏳ 引進中</td>
+        </tr>
+        <tr>
+          <td><strong>急性：Gepants（鼻噴）</strong></td>
+          <td>Zavegepant</td>
+          <td>急性發作（快速起效）</td>
+          <td><span class="ev-badge ev-A">A</span></td>
+          <td>⏳ 引進中</td>
+        </tr>
+        <tr>
+          <td><strong>急性：Ditans</strong></td>
+          <td>Lasmiditan</td>
+          <td>急性發作（心血管禁忌首選）</td>
+          <td><span class="ev-badge ev-A">A</span></td>
+          <td>⏳ 引進中</td>
+        </tr>
+        <tr>
+          <td><strong>預防：β-blocker</strong></td>
+          <td>Propranolol</td>
+          <td>陣發性偏頭痛預防</td>
+          <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線（EM）</span></td>
+          <td>✅ 健保給付</td>
+        </tr>
+        <tr>
+          <td><strong>預防：鈣離子阻斷劑</strong></td>
+          <td>Flunarizine</td>
+          <td>EM/CM 預防</td>
+          <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線</span></td>
+          <td>✅ 健保給付</td>
+        </tr>
+        <tr>
+          <td><strong>預防：抗癲癇藥</strong></td>
+          <td>Topiramate</td>
+          <td>EM/CM 預防</td>
+          <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線</span></td>
+          <td>✅ 健保給付</td>
+        </tr>
+        <tr>
+          <td><strong>預防：CGRP mAbs</strong></td>
+          <td>Erenumab/Fremanezumab/Galcanezumab</td>
+          <td>EM 預防（II 線）；CM 預防（I 線）</td>
+          <td><span class="ev-badge ev-A">A</span></td>
+          <td>✅ 已核准（健保條件付）</td>
+        </tr>
+        <tr>
+          <td><strong>預防：肉毒桿菌素</strong></td>
+          <td>OnabotulinumtoxinA</td>
+          <td>慢性偏頭痛</td>
+          <td><span class="ev-badge ev-A">A</span> <span class="ev-badge ev-I">I 線（CM）</span></td>
+          <td>✅ 已核准</td>
+        </tr>
+        <tr>
+          <td><strong>非藥物：神經調節</strong></td>
+          <td>Cefaly, GammaCore, sTMS, REN</td>
+          <td>急性 / 預防（輔助）</td>
+          <td><span class="ev-badge ev-B">B</span></td>
+          <td>⏳ 研究性質</td>
+        </tr>
+        <tr>
+          <td><strong>行為：CBT / 正念 / 放鬆</strong></td>
+          <td>CBT, MBSR, Biofeedback</td>
+          <td>預防（輔助）</td>
+          <td><span class="ev-badge ev-B">B</span></td>
+          <td>✅ 心理諮商可用</td>
+        </tr>
+        <tr>
+          <td><strong>運動：有氧 + 阻力</strong></td>
+          <td>每週 3 次、中等強度</td>
+          <td>預防（非藥物首選）</td>
+          <td><span class="ev-badge ev-B">B</span></td>
+          <td>✅ 無限制</td>
+        </tr>
+        <tr>
+          <td><strong>補充劑：Magnesium</strong></td>
+          <td>400–600 mg/day 口服</td>
+          <td>預防 / 急性（IV）</td>
+          <td><span class="ev-badge ev-B">B</span></td>
+          <td>✅ 自費可得</td>
+        </tr>
+        <tr>
+          <td><strong>補充劑：Riboflavin</strong></td>
+          <td>400 mg/day</td>
+          <td>預防</td>
+          <td><span class="ev-badge ev-B">B</span></td>
+          <td>✅ 自費可得</td>
+        </tr>
+        <tr>
+          <td><strong>補充劑：CoQ10</strong></td>
+          <td>100–400 mg/day</td>
+          <td>預防</td>
+          <td><span class="ev-badge ev-C">C</span></td>
+          <td>✅ 自費可得</td>
+        </tr>
+        <tr>
+          <td><strong>針灸</strong></td>
+          <td>傳統針刺 / 穴位注射</td>
+          <td>預防（替代選擇）</td>
+          <td><span class="ev-badge ev-B">B</span></td>
+          <td>✅ 健保可申報</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#8a8480;margin-top:8px">EM = 陣發性偏頭痛 Episodic Migraine；CM = 慢性偏頭痛 Chronic Migraine</p>
+  </div>
+
+  <div class="doc-footer">
+    <strong>主要參考來源</strong><br>
+    1. 台灣頭痛學會治療準則小組. 2022 台灣偏頭痛急性/預防性治療準則. <em>Acta Neurol Taiwan</em> 2022;31:89-113, 164-202.<br>
+    2. Charles AC et al. (AHS). CGRP-targeting therapies are first-line for migraine prevention. <em>Headache</em> 2024;64:333-341.<br>
+    3. Robblee J et al. AHS 2025 guideline update: parenteral pharmacotherapies for migraine in ED. <em>Headache</em> 2025. doi:10.1111/head.70016<br>
+    4. Haghdoost F et al. Efficacy of CGRP mAbs and gepants (NMA). <em>Cephalalgia</em> 2023.<br>
+    5. Treadwell JR et al. Behavioral interventions for migraine prevention (SR & meta-analysis). <em>Headache</em> 2025.<br>
+    6. Ogrezeanu C et al. Aerobic exercise dose-response for migraine (meta-analysis). <em>Headache</em> 2026. doi:10.1111/head.15070<br>
+    7. PeerJ 2025 (ML-NMA, 27 RCTs, N=1,611): Optimal exercise type and dose for migraine. PMC12548639<br>
+    8. Curr Pain Headache Rep 2025. Nutraceuticals: Riboflavin, CoQ10, Feverfew, Magnesium, Melatonin.<br>
+    9. Yuan H et al. (IHS). Evidence-based guidelines on non-invasive neuromodulation devices. <em>Cephalalgia</em> 2025.<br>
+    10. Puledda F et al. IHS Global Practice Recommendations for preventive pharmacological treatment. <em>Cephalalgia</em> 2024;44(9).<br><br>
+    <em>本文件依據公開發表之學術文獻及學會指引彙整，僅供醫療教育用途。個別病患之用藥決策仍應依台灣衛生主管機關規定、全民健保給付條件及臨床判斷為準。最後更新：2025 年 6 月。</em>
+  </div>
+
+</div>
+</body>
+</html>
