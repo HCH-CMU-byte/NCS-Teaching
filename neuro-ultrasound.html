@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>血管超音波教學資源 — 頸動脈與肢體動脈</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg:        #0a0e1a;
+    --surface:   #111827;
+    --surface2:  #1a2235;
+    --border:    #1f2d45;
+    --green:     #00e5a0;
+    --green-dim: #00734f;
+    --amber:     #f59e0b;
+    --red:       #ef4444;
+    --blue:      #60a5fa;
+    --text:      #e2e8f0;
+    --muted:     #64748b;
+    --label:     #94a3b8;
+    --mono:      'IBM Plex Mono', monospace;
+    --sans:      'Inter', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0f1f35 60%, #081520 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(0,229,160,0.06) 0%, transparent 70%);
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .18em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  h1 span { color: var(--green); }
+  .header-desc { color: var(--label); max-width: 600px; font-size: 14px; }
+
+  /* live waveform in header */
+  #header-wave { position: absolute; right: 0; top: 50%; transform: translateY(-50%); opacity: .35; }
+
+  /* ── NAV TABS ── */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--green); border-bottom-color: var(--green); }
+
+  /* ── MAIN LAYOUT ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── SECTION TITLES ── */
+  .sec-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    letter-spacing: .16em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+    letter-spacing: -.02em;
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: -.01em;
+  }
+  .section-lead {
+    color: var(--label);
+    font-size: 14px;
+    margin-bottom: 32px;
+    max-width: 680px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* ── WAVEFORM CANVAS ── */
+  .wave-panel {
+    background: #060c14;
+    border: 1px solid var(--green-dim);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .wave-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: .1em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .wave-panel canvas { display: block; width: 100%; }
+
+  /* grid lines overlay */
+  .wave-grid {
+    position: absolute;
+    inset: 36px 16px 16px;
+    background-image:
+      linear-gradient(rgba(0,229,160,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,.06) 1px, transparent 1px);
+    background-size: 20% 25%;
+    pointer-events: none;
+  }
+
+  /* ── PARAMS TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--label);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-align: left;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.02); }
+
+  .val-normal { color: var(--green); font-family: var(--mono); }
+  .val-warn   { color: var(--amber); font-family: var(--mono); }
+  .val-crit   { color: var(--red);   font-family: var(--mono); }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: .08em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .badge-res  { background: rgba(0,229,160,.15); color: var(--green); border: 1px solid var(--green-dim); }
+  .badge-adv  { background: rgba(245,158,11,.15); color: var(--amber); border: 1px solid #78450a; }
+  .badge-att  { background: rgba(239,68,68,.15);  color: var(--red);   border: 1px solid #7f1d1d; }
+
+  /* ── INTERACTIVE CONTROLS ── */
+  .ctrl-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .ctrl-group { display: flex; flex-direction: column; gap: 4px; }
+  .ctrl-group label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  input[type=range] {
+    width: 140px;
+    accent-color: var(--green);
+    cursor: pointer;
+  }
+  select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .readout {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    min-width: 55px;
+  }
+
+  /* ── CASE CARDS ── */
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .case-header {
+    background: var(--surface2);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .case-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green-dim);
+    min-width: 32px;
+  }
+  .case-title { font-weight: 600; font-size: 14px; color: var(--text); flex: 1; }
+  .case-toggle {
+    font-size: 18px;
+    color: var(--muted);
+    transition: transform .2s;
+  }
+  .case-header.open .case-toggle { transform: rotate(90deg); }
+  .case-body { display: none; padding: 20px; }
+  .case-body.open { display: block; }
+
+  .case-section { margin-bottom: 18px; }
+  .case-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .finding-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .finding-key {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 110px;
+  }
+  .finding-val { color: var(--text); }
+  .finding-val.ab { color: var(--amber); }
+  .finding-val.cr { color: var(--red); }
+
+  /* pitfall box */
+  .pitfall {
+    background: rgba(245,158,11,.08);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text);
+    margin-top: 12px;
+  }
+  .pitfall strong { color: var(--amber); }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .quiz-stem { font-weight: 500; margin-bottom: 14px; font-size: 14px; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: border-color .15s, background .15s;
+    text-align: left;
+    color: var(--text);
+    font-family: var(--sans);
+  }
+  .quiz-opt:hover { border-color: var(--blue); }
+  .quiz-opt.correct { border-color: var(--green); background: rgba(0,229,160,.08); }
+  .quiz-opt.wrong   { border-color: var(--red);   background: rgba(239,68,68,.08); }
+  .quiz-explain {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(96,165,250,.07);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--label);
+  }
+  .quiz-explain.show { display: block; }
+
+  /* ── PRINCIPLE BOXES ── */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .principle {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .principle-icon { font-size: 22px; margin-bottom: 8px; }
+  .principle h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .principle p  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* divider */
+  hr.sec-div {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* progress bar for quiz */
+  #quiz-progress-bar {
+    height: 3px;
+    background: var(--green);
+    border-radius: 2px;
+    transition: width .4s ease;
+    margin-bottom: 20px;
+  }
+  .quiz-score-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 24px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--label);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .quiz-score-num { font-size: 26px; color: var(--green); font-weight: 600; }
+
+  @media (max-width: 700px) {
+    header { padding: 32px 20px 24px; }
+    main { padding: 24px 16px 60px; }
+    #header-wave { display: none; }
+    .card-grid { grid-template-columns: 1fr; }
+    .principle-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-eyebrow">Vascular Ultrasound · 血管超音波教學資源</div>
+    <h1>頸動脈與肢體動脈<br><span>流速與波形分析</span></h1>
+    <p class="header-desc">適用住院醫師至主治醫師 · 含互動波形模擬、診斷標準、臨床案例與自我測驗</p>
+  </div>
+  <svg id="header-wave" width="420" height="110" viewBox="0 0 420 110">
+    <polyline id="hw-line" fill="none" stroke="#00e5a0" stroke-width="2"/>
+  </svg>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <button class="tab-btn active" onclick="switchTab('physics')">🌊 都卜勒原理</button>
+    <button class="tab-btn" onclick="switchTab('carotid')">🫀 頸動脈超音波</button>
+    <button class="tab-btn" onclick="switchTab('limb')">🦵 肢體動脈超音波</button>
+    <button class="tab-btn" onclick="switchTab('simulator')">📡 波形模擬器</button>
+    <button class="tab-btn" onclick="switchTab('cases')">🔬 臨床案例</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">✏️ 自我測驗</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ════════════════════════════════════════
+     SECTION 1: PHYSICS
+════════════════════════════════════════ -->
+<div class="section active" id="sec-physics">
+  <div class="sec-title">第一部分</div>
+  <h2>都卜勒超音波原理</h2>
+  <p class="section-lead">掌握基礎物理是正確判讀波形的根基。住院醫師應熟悉角度校正與 aliasing；主治醫師需能解釋儀器設定對波形的影響。</p>
+
+  <div class="principle-grid">
+    <div class="principle">
+      <div class="principle-icon">📐</div>
+      <h4>都卜勒方程式</h4>
+      <p>fd = 2·f₀·v·cos θ / c。角度 θ 越小，偵測到的頻移越大。臨床上固定使用 <strong style="color:var(--amber)">θ ≤ 60°</strong>，超過後 cos θ 急降導致低估嚴重。</p>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">⚡</div>
+      <h4>Aliasing 偽影</h4>
+      <p>當血流速度超過 Nyquist limit（PRF/2），波形頂部「折返」至負向。解決方法：調高 PRF、降低探頭頻率、改用 CW 模式。</p>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">🎯</div>
+      <h4>取樣容積</h4>
+      <p>PW 模式的 gate 大小影響頻譜純度。狹窄處建議縮小 gate 以準確測量 PSV；寬 gate 容易混入管壁低速訊號造成假性增寬。</p>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">🔴</div>
+      <h4>彩色血流圖（CFM）</h4>
+      <p>紅/藍代表方向，非動靜脈。Aliasing 在 CFM 表現為馬賽克（mosaic）訊號，是狹窄高流速的重要提示。</p>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">📊</div>
+      <h4>頻譜增寬（Spectral Broadening）</h4>
+      <p>正常層流在頻譜窗（spectral window）內為清亮。狹窄後亂流使窗內充填，狹窄後 2 cm 內尤其明顯。</p>
+    </div>
+    <div class="principle">
+      <div class="principle-icon">🔋</div>
+      <h4>Energy vs Velocity</h4>
+      <p>Power Doppler 不顯示方向，但對低速血流與小血管更敏感，常用於偵測完全閉塞邊緣的殘餘涓流（trickle flow）。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>角度校正互動示範</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">拖動滑桿改變入射角度，觀察同一血流速度下偵測到的 PSV 如何變化。</p>
+    <div class="ctrl-row">
+      <div class="ctrl-group">
+        <label>真實血流速度（cm/s）</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="range" id="true-vel" min="50" max="400" value="150" oninput="updateAngle()">
+          <span class="readout" id="tv-out">150</span>
+        </div>
+      </div>
+      <div class="ctrl-group">
+        <label>入射角度 θ（°）</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="range" id="angle-sl" min="0" max="89" value="60" oninput="updateAngle()">
+          <span class="readout" id="ang-out">60°</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:8px;">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px 24px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;margin-bottom:4px;">MEASURED PSV</div>
+        <div id="meas-psv" style="font-family:var(--mono);font-size:28px;color:var(--green);font-weight:600;">150</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">cm/s</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px 24px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.1em;margin-bottom:4px;">ERROR %</div>
+        <div id="meas-err" style="font-family:var(--mono);font-size:28px;color:var(--amber);font-weight:600;">0</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">% 低估</div>
+      </div>
+      <div id="angle-warn" style="display:none;background:rgba(239,68,68,.1);border:1px solid #7f1d1d;border-radius:8px;padding:16px 20px;align-self:center;max-width:260px;">
+        <div style="color:var(--red);font-weight:600;font-size:13px;margin-bottom:4px;">⚠ 角度過大</div>
+        <div style="font-size:12px;color:var(--muted);">θ &gt; 60° 誤差迅速增大，臨床上不應使用此角度進行速度測量。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>各類都卜勒模式比較</h3>
+    <table>
+      <tr><th>模式</th><th>資訊</th><th>優點</th><th>限制</th><th>臨床用途</th></tr>
+      <tr>
+        <td><span class="badge badge-res">CW</span></td>
+        <td>連續波</td>
+        <td>無速度上限，不 alias</td>
+        <td>無深度解析（range ambiguity）</td>
+        <td>高速狹窄（>200 cm/s）</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-res">PW</span></td>
+        <td>脈衝波頻譜</td>
+        <td>定深取樣，可測波形細節</td>
+        <td>Nyquist limit，易 alias</td>
+        <td>日常血管掃描主力</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-adv">CFM</span></td>
+        <td>彩色血流</td>
+        <td>快速定位血流方向、異常區</td>
+        <td>無法測量精確速度</td>
+        <td>引導 PW 取樣點</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-adv">Power</span></td>
+        <td>能量多普勒</td>
+        <td>低速、小血管靈敏</td>
+        <td>無方向資訊，易有 flash artifact</td>
+        <td>偵測殘餘涓流、微血管</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 2: CAROTID
+════════════════════════════════════════ -->
+<div class="section" id="sec-carotid">
+  <div class="sec-title">第二部分</div>
+  <h2>頸動脈超音波</h2>
+  <p class="section-lead">頸動脈掃描是血管超音波最常見的臨床應用，重點在於 ICA 狹窄分級與斑塊評估，以指導 TIA/stroke 二級預防與手術決策。</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>ICA vs ECA 鑑別要點</h3>
+      <table>
+        <tr><th>特徵</th><th>ICA</th><th>ECA</th></tr>
+        <tr><td>位置（通常）</td><td>後外側</td><td>前內側</td></tr>
+        <tr><td>分支</td><td>頸部無分支</td><td>有分支（甲狀腺上動脈）</td></tr>
+        <tr><td>波形</td><td>低阻力（高 EDV）</td><td>高阻力（低/逆向 EDV）</td></tr>
+        <tr><td>Temporal tap test</td><td>無明顯影響</td><td>出現鋸齒狀震盪</td></tr>
+        <tr><td>管徑</td><td>較粗</td><td>較細</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>正常頸動脈波形參數</h3>
+      <table>
+        <tr><th>血管</th><th>PSV（cm/s）</th><th>EDV（cm/s）</th><th>RI</th></tr>
+        <tr>
+          <td>CCA</td>
+          <td class="val-normal">&lt; 120</td>
+          <td class="val-normal">20–40</td>
+          <td class="val-normal">0.60–0.75</td>
+        </tr>
+        <tr>
+          <td>ICA</td>
+          <td class="val-normal">&lt; 125</td>
+          <td class="val-normal">25–50</td>
+          <td class="val-normal">0.55–0.70</td>
+        </tr>
+        <tr>
+          <td>ECA</td>
+          <td class="val-normal">&lt; 130</td>
+          <td class="val-normal">5–15</td>
+          <td class="val-normal">0.75–0.85</td>
+        </tr>
+        <tr>
+          <td>VA</td>
+          <td class="val-normal">&lt; 100</td>
+          <td class="val-normal">15–35</td>
+          <td class="val-normal">0.60–0.75</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- waveform display: carotid -->
+  <div class="card">
+    <h3>頸動脈波形互動顯示</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">選擇血管類型，觀察正常波形特徵與各項標注。</p>
+    <div class="ctrl-row">
+      <div class="ctrl-group">
+        <label>血管</label>
+        <select id="ca-vessel" onchange="drawCarotidWave()">
+          <option value="ica">ICA（內頸動脈）</option>
+          <option value="eca">ECA（外頸動脈）</option>
+          <option value="cca">CCA（總頸動脈）</option>
+          <option value="va">VA（椎動脈）</option>
+        </select>
+      </div>
+    </div>
+    <div class="wave-panel">
+      <div class="wave-label" id="ca-wave-label">ICA — 低阻力波形</div>
+      <div class="wave-grid"></div>
+      <canvas id="ca-canvas" width="900" height="160"></canvas>
+    </div>
+    <div id="ca-desc" style="margin-top:12px;font-size:13px;color:var(--label);padding:12px 16px;background:var(--surface2);border-radius:6px;border-left:3px solid var(--green);">
+      ICA 供應腦部，屬低阻力循環。特徵：PSV 快速上升，EDV 高（&gt;25 cm/s），舒張期持續前向血流。無逆向成分。
+    </div>
+  </div>
+
+  <hr class="sec-div">
+  <h3 style="margin-bottom:16px;">ICA 狹窄分級（SVU / SRU 標準）<span class="badge badge-adv" style="margin-left:10px;">住院醫師核心</span></h3>
+
+  <div class="card">
+    <table>
+      <tr><th>狹窄度</th><th>ICA PSV（cm/s）</th><th>ICA EDV（cm/s）</th><th>ICA/CCA PSV ratio</th><th>臨床決策</th></tr>
+      <tr>
+        <td><span style="color:var(--green)">正常 / &lt;50%</span></td>
+        <td class="val-normal">&lt; 125</td>
+        <td class="val-normal">&lt; 40</td>
+        <td class="val-normal">&lt; 2.0</td>
+        <td style="font-size:12px;color:var(--muted)">追蹤或無需處置</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--amber)">50–69%</span></td>
+        <td class="val-warn">125–230</td>
+        <td class="val-warn">40–100</td>
+        <td class="val-warn">2.0–4.0</td>
+        <td style="font-size:12px;color:var(--muted)">CTA/MRA 確認；症狀性→手術考量</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--red)">≥ 70%（非閉塞）</span></td>
+        <td class="val-crit">&gt; 230</td>
+        <td class="val-crit">&gt; 100</td>
+        <td class="val-crit">&gt; 4.0</td>
+        <td style="font-size:12px;color:var(--muted)">症狀性→CEA/CAS；無症狀性→個別評估</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--red)">近全閉塞</span></td>
+        <td colspan="3" style="color:var(--muted);font-size:12px;">PSV 可能偏低（string sign）；彩色血流＋Power Doppler 確認殘餘管腔</td>
+        <td style="font-size:12px;color:var(--muted)">急會外科</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--red)">完全閉塞</span></td>
+        <td colspan="3" style="color:var(--muted);font-size:12px;">無血流訊號；CCA 呈現高阻力波形（EDV 接近零或逆向）</td>
+        <td style="font-size:12px;color:var(--muted)">藥物治療為主</td>
+      </tr>
+    </table>
+    <div class="pitfall">
+      <strong>⚠ 陷阱：</strong> 支架術後（CAS）不能套用相同標準。支架後 ICA PSV &gt; 300 cm/s 才對應 ≥ 70% 再狹窄（Restenosis）。若用一般標準會過度診斷。
+    </div>
+  </div>
+
+  <hr class="sec-div">
+  <h3 style="margin-bottom:16px;">斑塊評估<span class="badge badge-adv" style="margin-left:10px;">進階</span></h3>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Gray-Weale / AHA 斑塊分類</h3>
+      <table>
+        <tr><th>類型</th><th>特徵</th><th>臨床意義</th></tr>
+        <tr><td>Type I</td><td style="font-size:12px">均勻低回聲</td><td style="font-size:12px;color:var(--red)">軟斑，高風險（富含脂質）</td></tr>
+        <tr><td>Type II</td><td style="font-size:12px">主要低回聲</td><td style="font-size:12px;color:var(--amber)">混合斑</td></tr>
+        <tr><td>Type III</td><td style="font-size:12px">主要高回聲</td><td style="font-size:12px;color:var(--green)">纖維化，相對穩定</td></tr>
+        <tr><td>Type IV</td><td style="font-size:12px">均勻高回聲</td><td style="font-size:12px;color:var(--green)">鈣化，聲影遮蔽</td></tr>
+        <tr><td>Type V</td><td style="font-size:12px">無法分類</td><td style="font-size:12px;color:var(--muted)">—</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>IMT 測量要點</h3>
+      <ul style="font-size:13px;color:var(--label);padding-left:16px;line-height:1.9;">
+        <li>測量位置：CCA 遠端 1 cm、後壁</li>
+        <li>正常上限：<span class="val-normal">&lt; 0.9 mm</span>（年齡校正後）</li>
+        <li>&gt; 1.0 mm：心血管風險升高</li>
+        <li>斑塊定義：&gt; 1.5 mm 或高出管壁 &gt; 0.5 mm</li>
+        <li>重現性差（±0.1 mm 觀察者間誤差）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 3: LIMB ARTERIES
+════════════════════════════════════════ -->
+<div class="section" id="sec-limb">
+  <div class="sec-title">第三部分</div>
+  <h2>肢體動脈超音波</h2>
+  <p class="section-lead">肢體動脈屬高阻力循環，正常波形為三相波（triphasic）。波形退化程度反映近端阻塞的嚴重度，是評估 PAD 的核心技能。</p>
+
+  <!-- Waveform types visual -->
+  <div class="card">
+    <h3>波形三分型（Waveform Classification）</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:8px;">
+      <div>
+        <div class="wave-panel">
+          <div class="wave-label">正常 — 三相波 Triphasic</div>
+          <div class="wave-grid"></div>
+          <canvas id="wf-tri" width="360" height="120"></canvas>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">快速收縮上升 → 短暫逆向成分 → 低幅前向舒張波。反映正常血管彈性與低遠端阻力。</p>
+      </div>
+      <div>
+        <div class="wave-panel">
+          <div class="wave-label">輕中度病變 — 雙相波 Biphasic</div>
+          <div class="wave-grid"></div>
+          <canvas id="wf-bi" width="360" height="120"></canvas>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">逆向成分消失，仍保有快速收縮上升。見於輕中度阻塞或近端輕度狹窄。</p>
+      </div>
+      <div>
+        <div class="wave-panel">
+          <div class="wave-label">重度病變 — 單相波 Monophasic</div>
+          <div class="wave-grid"></div>
+          <canvas id="wf-mono" width="360" height="120"></canvas>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">波形圓頓、上升緩慢（tardus-parvus）。近端重度狹窄或閉塞的典型表現。AT &gt; 100 ms。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Tardus-Parvus 現象 <span class="badge badge-att" style="margin-left:8px;">主治醫師重點</span></h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">狹窄近端到遠端的波形傳導效應：收縮波變矮（parvus）、上升緩慢（tardus）。這是<strong style="color:var(--amber)">間接</strong>診斷近端狹窄的關鍵依據。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <table>
+        <tr><th>參數</th><th>正常</th><th>Tardus-Parvus</th></tr>
+        <tr>
+          <td>加速時間（AT）</td>
+          <td class="val-normal">&lt; 100 ms</td>
+          <td class="val-crit">&gt; 100 ms</td>
+        </tr>
+        <tr>
+          <td>加速指數（AI）</td>
+          <td class="val-normal">&gt; 300 cm/s²</td>
+          <td class="val-crit">&lt; 100 cm/s²</td>
+        </tr>
+        <tr>
+          <td>PSV</td>
+          <td class="val-normal">正常</td>
+          <td class="val-warn">降低</td>
+        </tr>
+        <tr>
+          <td>RI</td>
+          <td class="val-normal">0.75–0.90</td>
+          <td class="val-warn">降低（&lt;0.70）</td>
+        </tr>
+      </table>
+      <div>
+        <p style="font-size:13px;color:var(--label);margin-bottom:10px;">常見應用場景：</p>
+        <ul style="font-size:13px;color:var(--muted);padding-left:16px;line-height:2;">
+          <li>腎動脈狹窄（腎動脈 PSV + 腎實質內 AT）</li>
+          <li>鎖骨下動脈閉塞（腋動脈 tardus-parvus）</li>
+          <li>SFA 近端閉塞（膕動脈以下）</li>
+          <li>主腸繫膜動脈狹窄（間接評估）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="sec-div">
+  <h3 style="margin-bottom:16px;">下肢動脈狹窄診斷標準</h3>
+  <div class="card">
+    <table>
+      <tr><th>狹窄分級</th><th>PSV 比值（狹窄/近端）</th><th>波形</th><th>彩色血流</th></tr>
+      <tr>
+        <td class="val-normal">正常</td>
+        <td class="val-normal">&lt; 2.0</td>
+        <td style="font-size:12px">三相波</td>
+        <td style="font-size:12px;color:var(--muted)">均勻充填</td>
+      </tr>
+      <tr>
+        <td class="val-warn">&lt; 50%</td>
+        <td class="val-warn">2.0–2.4</td>
+        <td style="font-size:12px">三相波→雙相波</td>
+        <td style="font-size:12px;color:var(--muted)">輕度 aliasing</td>
+      </tr>
+      <tr>
+        <td class="val-warn">50–74%</td>
+        <td class="val-warn">2.5–3.9</td>
+        <td style="font-size:12px">雙相波</td>
+        <td style="font-size:12px;color:var(--muted)">明顯 aliasing</td>
+      </tr>
+      <tr>
+        <td class="val-crit">≥ 75%</td>
+        <td class="val-crit">≥ 4.0</td>
+        <td style="font-size:12px">單相波（遠端）</td>
+        <td style="font-size:12px;color:var(--muted)">馬賽克 mosaic</td>
+      </tr>
+      <tr>
+        <td class="val-crit">閉塞</td>
+        <td colspan="3" style="font-size:12px;color:var(--muted)">閉塞段無訊號，遠端側枝供應呈低速單相波</td>
+      </tr>
+    </table>
+    <div class="pitfall">
+      <strong>⚠ 串聯病變（Tandem Lesion）陷阱：</strong>兩處病變相互影響，近端病變降低遠端流速，可能低估遠端狹窄的真實程度。掃描時需評估全段血管，不可只看局部高流速。
+    </div>
+  </div>
+
+  <hr class="sec-div">
+  <h3 style="margin-bottom:16px;">鎖骨下竊血症（Subclavian Steal Syndrome）<span class="badge badge-att" style="margin-left:8px;">主治醫師</span></h3>
+  <div class="card">
+    <p style="font-size:13px;color:var(--label);margin-bottom:14px;">鎖骨下動脈（SA）近端嚴重狹窄或閉塞，導致同側椎動脈（VA）血流逆流以供應上肢。</p>
+    <table>
+      <tr><th>分期</th><th>椎動脈波形</th><th>觸發條件</th></tr>
+      <tr>
+        <td>Stage 1（潛伏期）</td>
+        <td style="font-size:12px">正常，但收縮早期有切跡（notch）</td>
+        <td style="font-size:12px;color:var(--muted)">靜息即存在</td>
+      </tr>
+      <tr>
+        <td>Stage 2（部分竊血）</td>
+        <td style="font-size:12px">收縮期逆流，舒張期前向（交替流）</td>
+        <td style="font-size:12px;color:var(--muted)">靜息即存在</td>
+      </tr>
+      <tr>
+        <td>Stage 3（完全竊血）</td>
+        <td style="font-size:12px">全期逆流（波形倒置）</td>
+        <td style="font-size:12px;color:var(--muted)">靜息即完全逆流</td>
+      </tr>
+    </table>
+    <div style="margin-top:12px;padding:12px 16px;background:var(--surface2);border-radius:6px;font-size:13px;color:var(--label);">
+      <strong style="color:var(--blue)">📋 診斷提示：</strong>雙上肢血壓差 &gt; 15–20 mmHg 是重要線索。Arm hyperemia test（充氣加壓後放開）可誘發 Stage 1/2 患者出現更明顯的逆流。
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 4: SIMULATOR
+════════════════════════════════════════ -->
+<div class="section" id="sec-simulator">
+  <div class="sec-title">第四部分</div>
+  <h2>都卜勒波形模擬器</h2>
+  <p class="section-lead">調整各項參數，即時觀察頻譜波形如何變化。理解每個參數對波形的獨立貢獻，是精確判讀的基礎。</p>
+
+  <div class="card">
+    <div class="ctrl-row" style="gap:28px;">
+      <div class="ctrl-group">
+        <label>血管類型</label>
+        <select id="sim-type" onchange="updateSim()">
+          <option value="limb">肢體動脈（正常）</option>
+          <option value="ica">ICA（正常）</option>
+          <option value="stenosis50">肢體 50–74% 狹窄</option>
+          <option value="stenosis75">肢體 ≥75% 狹窄</option>
+          <option value="distal_block">遠端阻塞（高阻力）</option>
+          <option value="avf">AVF 供應動脈（低阻力）</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>近端狹窄程度（對波形的影響）</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="range" id="sim-stenosis" min="0" max="100" value="0" oninput="updateSim()">
+          <span class="readout" id="sim-sten-out">0%</span>
+        </div>
+      </div>
+      <div class="ctrl-group">
+        <label>心率（bpm）</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="range" id="sim-hr" min="40" max="120" value="70" oninput="updateSim()">
+          <span class="readout" id="sim-hr-out">70</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wave-panel" style="margin-bottom:16px;">
+      <div class="wave-label" id="sim-label">肢體動脈 — 三相波</div>
+      <div class="wave-grid"></div>
+      <canvas id="sim-canvas" width="900" height="200"></canvas>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:4px;">PSV</div>
+        <div id="sim-psv" style="font-family:var(--mono);font-size:22px;color:var(--green);font-weight:600;">90</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">cm/s</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:4px;">EDV</div>
+        <div id="sim-edv" style="font-family:var(--mono);font-size:22px;color:var(--green);font-weight:600;">0</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">cm/s</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:4px;">RI</div>
+        <div id="sim-ri" style="font-family:var(--mono);font-size:22px;color:var(--green);font-weight:600;">1.0</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">resistive index</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:4px;">波形分型</div>
+        <div id="sim-wftype" style="font-family:var(--mono);font-size:14px;color:var(--amber);font-weight:600;margin-top:8px;">三相波</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:4px;">AT</div>
+        <div id="sim-at" style="font-family:var(--mono);font-size:22px;color:var(--green);font-weight:600;">72</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">ms</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 5: CASES
+════════════════════════════════════════ -->
+<div class="section" id="sec-cases">
+  <div class="sec-title">第五部分</div>
+  <h2>臨床案例分析</h2>
+  <p class="section-lead">點開每個案例，按步驟思考後再查看診斷依據。建議先嘗試自行判讀超音波發現，再對照分析。</p>
+
+  <!-- Case 1 -->
+  <div class="case-card">
+    <div class="case-header" onclick="toggleCase(this)">
+      <div class="case-num">Case 01</div>
+      <div class="case-title">70 歲男性，無症狀頸動脈雜音 — 右側頸動脈狹窄程度評估</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge badge-res">住院醫師</span>
+        <span class="case-toggle">▶</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <div class="case-section-label">臨床情境</div>
+        <p style="font-size:13px;color:var(--label);">70 歲男性，有 HTN、DM、抽菸史。常規健康檢查發現右頸雜音，無 TIA/stroke 病史，神經學檢查正常。轉介進行頸動脈超音波評估。</p>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">超音波發現</div>
+        <div class="finding-row"><span class="finding-key">B-mode</span><span class="finding-val ab">右 ICA 近端混合型斑塊（Type II），表面不規則</span></div>
+        <div class="finding-row"><span class="finding-key">彩色血流</span><span class="finding-val ab">右 ICA 近端明顯 aliasing（馬賽克）</span></div>
+        <div class="finding-row"><span class="finding-key">右 ICA PSV</span><span class="finding-val cr">258 cm/s</span></div>
+        <div class="finding-row"><span class="finding-key">右 ICA EDV</span><span class="finding-val cr">118 cm/s</span></div>
+        <div class="finding-row"><span class="finding-key">右 CCA PSV</span><span class="finding-val">52 cm/s</span></div>
+        <div class="finding-row"><span class="finding-key">ICA/CCA ratio</span><span class="finding-val cr">4.96</span></div>
+        <div class="finding-row"><span class="finding-key">左側</span><span class="finding-val">全部正常（ICA PSV 88 cm/s）</span></div>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">診斷分析</div>
+        <p style="font-size:13px;color:var(--label);">PSV 258 cm/s（&gt;230）、EDV 118（&gt;100）、ratio 4.96（&gt;4.0）→ 三項指標均符合 <strong style="color:var(--red)">≥70% 狹窄</strong>標準。</p>
+        <p style="font-size:13px;color:var(--label);margin-top:6px;">雖為無症狀，仍需 CTA 或 MRA 確認解剖結構，再與血管外科/神經科共同評估是否需要 CEA 或 CAS（依指引：無症狀 ≥70% 且預期壽命 &gt;5 年可考慮手術）。</p>
+      </div>
+      <div class="pitfall">
+        <strong>⚠ 陷阱：</strong>「無症狀」不等於「無需處置」。超音波發現 ≥70% 狹窄後，應安排影像學確認，並評估斑塊形態（低回聲軟斑風險更高）。不要因為無症狀就停止追蹤。
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 2 -->
+  <div class="case-card">
+    <div class="case-header" onclick="toggleCase(this)">
+      <div class="case-num">Case 02</div>
+      <div class="case-title">65 歲女性，TIA 後 — 懷疑左 ICA 近全閉塞（String Sign）</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge badge-adv">進階</span>
+        <span class="case-toggle">▶</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <div class="case-section-label">臨床情境</div>
+        <p style="font-size:13px;color:var(--label);">65 歲女性，昨日短暫右側肢體無力（約 20 分鐘完全恢復）。急診安排頸動脈超音波。</p>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">超音波發現</div>
+        <div class="finding-row"><span class="finding-key">左 ICA B-mode</span><span class="finding-val ab">廣泛低回聲斑塊，管腔幾乎無法辨識</span></div>
+        <div class="finding-row"><span class="finding-key">左 ICA PSV</span><span class="finding-val ab">42 cm/s（出乎意料地低）</span></div>
+        <div class="finding-row"><span class="finding-key">左 ICA EDV</span><span class="finding-val cr">3 cm/s（幾乎無舒張期血流）</span></div>
+        <div class="finding-row"><span class="finding-key">左 CCA</span><span class="finding-val cr">高阻力波形，EDV 接近零</span></div>
+        <div class="finding-row"><span class="finding-key">Power Doppler</span><span class="finding-val ab">極細殘餘管腔，涓流訊號</span></div>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">診斷分析</div>
+        <p style="font-size:13px;color:var(--label);">PSV <strong style="color:var(--amber)">極低</strong>是陷阱！近全閉塞（near-occlusion）時，管腔幾乎閉合，流速因流量極低而降低，<strong>不符合一般「狹窄越重 PSV 越高」的規律</strong>。</p>
+        <p style="font-size:13px;color:var(--label);margin-top:6px;">CCA 呈現高阻力波形（ICA 閉塞後血流出口消失），是重要間接線索。Power Doppler 確認殘餘細小管腔 = String Sign。</p>
+      </div>
+      <div class="pitfall">
+        <strong>⚠ 關鍵概念：</strong>近全閉塞與完全閉塞的鑑別至關重要。String Sign（殘餘涓流）=近全閉塞，手術上仍有修復機會。完全閉塞則以藥物治療為主。請務必加用 Power Doppler 確認。
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 3 -->
+  <div class="case-card">
+    <div class="case-header" onclick="toggleCase(this)">
+      <div class="case-num">Case 03</div>
+      <div class="case-title">58 歲男性，間歇性跛行 — 左下肢多節段 PAD</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge badge-res">住院醫師</span>
+        <span class="case-toggle">▶</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <div class="case-section-label">臨床情境</div>
+        <p style="font-size:13px;color:var(--label);">58 歲男性，DM+抽菸，左下肢行走約 200m 後小腿疼痛，休息後緩解。ABI 左側 0.62（右側 0.94）。</p>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">超音波發現（由近而遠）</div>
+        <div class="finding-row"><span class="finding-key">左 CFA</span><span class="finding-val">三相波，PSV 92 cm/s（正常）</span></div>
+        <div class="finding-row"><span class="finding-key">左 SFA 近端</span><span class="finding-val ab">雙相波，PSV 142 cm/s；ratio 2.8</span></div>
+        <div class="finding-row"><span class="finding-key">左 SFA 中段</span><span class="finding-val cr">無血流訊號（閉塞，長約 12 cm）</span></div>
+        <div class="finding-row"><span class="finding-key">左 SFA 遠端</span><span class="finding-val cr">側枝重建，單相波，PSV 36 cm/s，AT 158 ms</span></div>
+        <div class="finding-row"><span class="finding-key">左膕動脈</span><span class="finding-val cr">單相波，PSV 28 cm/s</span></div>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">診斷分析</div>
+        <p style="font-size:13px;color:var(--label);">SFA 近端 ratio 2.8 提示 50–74% 狹窄；中段完全閉塞約 12 cm；遠端側枝重建後 AT 158 ms（&gt;100 ms）確認 Tardus-Parvus。此為典型多節段 PAD，適合轉介血管外科評估介入治療可行性。</p>
+      </div>
+      <div class="pitfall">
+        <strong>⚠ 串聯病變注意：</strong>SFA 近端狹窄 + 中段閉塞並存，不能只因遠端流速低就低估近端狹窄的嚴重度。應分段記錄每個節段的 ratio 與波形分型。
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 4 -->
+  <div class="case-card">
+    <div class="case-header" onclick="toggleCase(this)">
+      <div class="case-num">Case 04</div>
+      <div class="case-title">42 歲男性，左上肢血壓差 28 mmHg — 鎖骨下竊血</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge badge-att">主治醫師</span>
+        <span class="case-toggle">▶</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <div class="case-section-label">臨床情境</div>
+        <p style="font-size:13px;color:var(--label);">42 歲男性，偶發左上肢運動後頭暈、視力模糊。理學檢查：右上肢 BP 130/80，左上肢 BP 102/68。左橈動脈脈搏減弱。</p>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">超音波發現</div>
+        <div class="finding-row"><span class="finding-key">左鎖骨下動脈</span><span class="finding-val cr">近端閉塞，PSV 無法測得</span></div>
+        <div class="finding-row"><span class="finding-key">左椎動脈</span><span class="finding-val cr">收縮期逆流，舒張期仍前向（Stage 2 partial steal）</span></div>
+        <div class="finding-row"><span class="finding-key">左腋動脈</span><span class="finding-val ab">PSV 降低，單相波，AT 138 ms</span></div>
+        <div class="finding-row"><span class="finding-key">右椎動脈</span><span class="finding-val">正常前向流</span></div>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">診斷分析</div>
+        <p style="font-size:13px;color:var(--label);">左鎖骨下動脈近端閉塞 → 左上肢阻力升高 → 逆用左椎動脈血流補充 → <strong style="color:var(--amber)">左椎動脈 Stage 2 Subclavian Steal</strong>。上肢運動（阻力升高）會加重竊血，誘發後循環缺血症狀（頭暈、視力模糊）。</p>
+      </div>
+      <div class="pitfall">
+        <strong>⚠ 診斷提示：</strong>椎動脈方向不對稱是最重要線索。若靜息時僅有 Stage 1（收縮早期切跡），可做 arm hyperemia test（充氣袋加壓 3 分鐘後放開）誘發出完整逆流。
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 5 -->
+  <div class="case-card">
+    <div class="case-header" onclick="toggleCase(this)">
+      <div class="case-num">Case 05</div>
+      <div class="case-title">55 歲女性，腹股溝穿刺後腫塊 — 假性動脈瘤</div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span class="badge badge-adv">進階</span>
+        <span class="case-toggle">▶</span>
+      </div>
+    </div>
+    <div class="case-body">
+      <div class="case-section">
+        <div class="case-section-label">臨床情境</div>
+        <p style="font-size:13px;color:var(--label);">55 歲女性，接受冠狀動脈攝影（右股動脈穿刺）後 2 天，右腹股溝出現搏動性腫塊伴疼痛。</p>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">超音波發現</div>
+        <div class="finding-row"><span class="finding-key">B-mode</span><span class="finding-val ab">CFA 旁液性囊狀結構（2.8 × 2.1 cm）</span></div>
+        <div class="finding-row"><span class="finding-key">彩色血流</span><span class="finding-val cr">囊內 Yin-Yang sign（雙向渦流，紅藍各半）</span></div>
+        <div class="finding-row"><span class="finding-key">頸部頻譜</span><span class="finding-val cr">To-and-Fro pattern（收縮期進入，舒張期回流）</span></div>
+        <div class="finding-row"><span class="finding-key">頸部寬度</span><span class="finding-val ab">3 mm（窄頸）</span></div>
+      </div>
+      <div class="case-section">
+        <div class="case-section-label">診斷分析</div>
+        <p style="font-size:13px;color:var(--label);">To-and-Fro sign 是假性動脈瘤（Pseudoaneurysm）的病理特徵：收縮期血液從破口衝入囊腔，舒張期回流至動脈。窄頸（&lt;5 mm）是超音波導引壓迫或注射凝血酶（thrombin injection）的良好適應症。</p>
+      </div>
+      <div class="pitfall">
+        <strong>⚠ 鑑別診斷：</strong>腹股溝腫塊需與血腫（無血流）、AVF（靜脈動脈化波形）、淋巴腫塊鑑別。To-and-Fro + Yin-Yang 是假性動脈瘤的確診組合，不應與單純血腫混淆。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION 6: QUIZ
+════════════════════════════════════════ -->
+<div class="section" id="sec-quiz">
+  <div class="sec-title">第六部分</div>
+  <h2>自我測驗</h2>
+  <p class="section-lead">點選答案後立即顯示解析。可隨時重新作答。</p>
+
+  <div class="quiz-score-box">
+    <div>
+      <div style="font-size:10px;letter-spacing:.1em;color:var(--muted);margin-bottom:2px;">目前得分</div>
+      <span class="quiz-score-num" id="q-score">0</span><span style="font-size:13px;color:var(--muted)"> / <span id="q-total">0</span> 已作答</span>
+    </div>
+    <button onclick="resetQuiz()" style="background:var(--surface);border:1px solid var(--border);color:var(--label);font-family:var(--mono);font-size:11px;padding:8px 16px;border-radius:6px;cursor:pointer;letter-spacing:.08em;">RESET</button>
+  </div>
+
+  <div id="quiz-container"></div>
+</div>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════
+//  TAB SWITCHING
+// ═══════════════════════════════════════
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  // draw relevant canvases
+  if (id === 'carotid') { setTimeout(drawCarotidWave, 50); }
+  if (id === 'limb') { setTimeout(drawLimbWaveforms, 50); }
+  if (id === 'simulator') { setTimeout(updateSim, 50); }
+  if (id === 'physics') { setTimeout(updateAngle, 50); }
+}
+
+// ═══════════════════════════════════════
+//  HEADER ANIMATED WAVEFORM
+// ═══════════════════════════════════════
+(function animHeader() {
+  const poly = document.getElementById('hw-line');
+  let t = 0;
+  function frame() {
+    t += 0.03;
+    const pts = [];
+    for (let x = 0; x <= 420; x += 5) {
+      const phase = (x / 420) * 4 * Math.PI + t;
+      const y = 55 + drawICAShape(phase) * 38;
+      pts.push(x + ',' + y);
+    }
+    poly.setAttribute('points', pts.join(' '));
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+function drawICAShape(p) {
+  const cycle = ((p % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  if (cycle < 0.3) return cycle / 0.3;
+  if (cycle < 0.55) return 1 - (cycle - 0.3) / 0.25 * 0.35;
+  if (cycle < 0.75) return 0.65 + Math.sin((cycle - 0.55) / 0.2 * Math.PI) * 0.12;
+  return 0.25 - (cycle - 0.75) / (2 * Math.PI - 0.75) * 0.2;
+}
+
+// ═══════════════════════════════════════
+//  ANGLE CORRECTION DEMO
+// ═══════════════════════════════════════
+function updateAngle() {
+  const tv = +document.getElementById('true-vel').value;
+  const ang = +document.getElementById('angle-sl').value;
+  document.getElementById('tv-out').textContent = tv;
+  document.getElementById('ang-out').textContent = ang + '°';
+  const meas = Math.round(tv * Math.cos(ang * Math.PI / 180));
+  const err = Math.round((1 - meas / tv) * 100);
+  document.getElementById('meas-psv').textContent = meas;
+  document.getElementById('meas-err').textContent = err;
+  document.getElementById('angle-warn').style.display = ang > 60 ? 'block' : 'none';
+}
+updateAngle();
+
+// ═══════════════════════════════════════
+//  CAROTID WAVEFORM DRAW
+// ═══════════════════════════════════════
+const caWaveData = {
+  ica:  { label: 'ICA — 低阻力波形（低 RI，高 EDV）',   desc: 'ICA 供應腦部，屬低阻力循環。特徵：PSV 快速上升，EDV 高（>25 cm/s），舒張期持續前向血流。無逆向成分。' },
+  eca:  { label: 'ECA — 高阻力波形（有逆向切跡）',       desc: 'ECA 供應顏面，屬高阻力循環。特徵：PSV 快速下降，EDV 極低或有短暫逆向切跡。Temporal tap 可產生震盪。' },
+  cca:  { label: 'CCA — 混合波形（ICA+ECA 特徵）',      desc: 'CCA 波形介於 ICA（70% 貢獻）與 ECA（30%）之間。EDV 中等，有小幅逆向切跡。' },
+  va:   { label: 'VA（椎動脈）— 低阻力前向波形',         desc: '正常 VA 為前向低阻力波形，類似 ICA 但流速稍低。重要：若出現逆向成分，須考慮鎖骨下竊血！' },
+};
+
+function drawCarotidWave() {
+  const type = document.getElementById('ca-vessel').value;
+  const info = caWaveData[type];
+  document.getElementById('ca-wave-label').textContent = info.label;
+  document.getElementById('ca-desc').textContent = info.desc;
+  const canvas = document.getElementById('ca-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  drawWaveformOnCanvas(ctx, W, H, type, false);
+}
+
+function drawWaveformOnCanvas(ctx, W, H, type, animated) {
+  ctx.strokeStyle = '#00e5a0';
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = '#00e5a0';
+  ctx.shadowBlur = 8;
+  const cycles = 3;
+  const step = W / (cycles * 100);
+  ctx.beginPath();
+  for (let i = 0; i <= cycles * 100; i++) {
+    const x = i * step;
+    const phase = (i / 100) * 2 * Math.PI;
+    const y = H / 2 - getWaveY(type, phase) * (H / 2 - 12);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  // labels
+  ctx.fillStyle = '#64748b';
+  ctx.font = '11px IBM Plex Mono, monospace';
+  ctx.fillText('PSV', 8, 18);
+  ctx.fillText('EDV', 8, H - 10);
+  ctx.fillStyle = '#1f2d45';
+  ctx.strokeStyle = '#1f2d45';
+  ctx.setLineDash([3, 5]);
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, H / 2);
+  ctx.lineTo(W, H / 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function getWaveY(type, phase) {
+  const t = ((phase % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  switch (type) {
+    case 'ica':
+    case 'va':
+      if (t < 0.3) return t / 0.3;
+      if (t < 0.65) return 1 - (t - 0.3) / 0.35 * 0.55;
+      return 0.45 + Math.sin((t - 0.65) / (2 * Math.PI - 0.65) * Math.PI) * 0.08;
+    case 'eca':
+      if (t < 0.25) return t / 0.25;
+      if (t < 0.45) return 1 - (t - 0.25) / 0.2 * 1.25;
+      if (t < 0.55) return -0.25 + (t - 0.45) / 0.1 * 0.35;
+      return 0.1 - (t - 0.55) / (2 * Math.PI - 0.55) * 0.1;
+    case 'cca':
+      if (t < 0.28) return t / 0.28;
+      if (t < 0.5) return 1 - (t - 0.28) / 0.22 * 0.75;
+      if (t < 0.62) return 0.25 + Math.sin((t - 0.5) / 0.12 * Math.PI) * 0.08;
+      return 0.25 - (t - 0.62) / (2 * Math.PI - 0.62) * 0.22;
+    default: return 0;
+  }
+}
+setTimeout(drawCarotidWave, 200);
+
+// ═══════════════════════════════════════
+//  LIMB WAVEFORMS
+// ═══════════════════════════════════════
+function drawLimbWaveforms() {
+  drawLimbWave('wf-tri', 'triphasic');
+  drawLimbWave('wf-bi', 'biphasic');
+  drawLimbWave('wf-mono', 'monophasic');
+}
+
+function drawLimbWave(canvasId, type) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = type === 'monophasic' ? '#ef4444' : type === 'biphasic' ? '#f59e0b' : '#00e5a0';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = ctx.strokeStyle;
+  ctx.shadowBlur = 6;
+  const cycles = 3;
+  ctx.beginPath();
+  for (let i = 0; i <= cycles * 120; i++) {
+    const x = (i / (cycles * 120)) * W;
+    const phase = (i / 120) * 2 * Math.PI;
+    const y = H * 0.55 - getLimbWaveY(type, phase) * (H * 0.42);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#1f2d45';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([3, 5]);
+  ctx.beginPath();
+  ctx.moveTo(0, H * 0.55);
+  ctx.lineTo(W, H * 0.55);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function getLimbWaveY(type, phase) {
+  const t = ((phase % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  switch (type) {
+    case 'triphasic':
+      if (t < 0.2) return t / 0.2;
+      if (t < 0.45) return 1 - (t - 0.2) / 0.25 * 1.5;
+      if (t < 0.6) return -0.5 + (t - 0.45) / 0.15 * 0.65;
+      if (t < 0.8) return 0.15 + Math.sin((t - 0.6) / 0.2 * Math.PI) * 0.18;
+      return 0.08 - (t - 0.8) / (2 * Math.PI - 0.8) * 0.08;
+    case 'biphasic':
+      if (t < 0.22) return t / 0.22;
+      if (t < 0.55) return 1 - (t - 0.22) / 0.33 * 0.92;
+      if (t < 0.8) return 0.08 + Math.sin((t - 0.55) / 0.25 * Math.PI) * 0.1;
+      return 0.05 - (t - 0.8) / (2 * Math.PI - 0.8) * 0.05;
+    case 'monophasic':
+      if (t < 0.45) return Math.sin(t / 0.45 * Math.PI) * 0.55;
+      if (t < 0.9) return Math.sin((t - 0.45) / 0.45 * Math.PI) * 0.15;
+      return 0.02;
+    default: return 0;
+  }
+}
+setTimeout(drawLimbWaveforms, 200);
+
+// ═══════════════════════════════════════
+//  SIMULATOR
+// ═══════════════════════════════════════
+const simPresets = {
+  limb:         { psv: 90, edv: 0, ri: 1.0, at: 72, wftype: '三相波', label: '肢體動脈 — 三相波（正常）', wf: 'triphasic' },
+  ica:          { psv: 88, edv: 32, ri: 0.64, at: 68, wftype: '低阻力', label: 'ICA — 低阻力（正常）', wf: 'ica' },
+  stenosis50:   { psv: 185, edv: 15, ri: 0.92, at: 88, wftype: '雙相波', label: '肢體 50–74% 狹窄', wf: 'biphasic' },
+  stenosis75:   { psv: 310, edv: 45, ri: 0.86, at: 110, wftype: '單相波（遠端）', label: '肢體 ≥75% 狹窄（狹窄處高速）', wf: 'stenotic' },
+  distal_block: { psv: 60, edv: -5, ri: 1.08, at: 65, wftype: '高阻力', label: '遠端阻塞 — 高阻力反射波', wf: 'high_resist' },
+  avf:          { psv: 165, edv: 72, ri: 0.56, at: 62, wftype: '低阻力', label: 'AVF 供應動脈 — 超低阻力', wf: 'avf' },
+};
+
+function getLimbWaveYEx(type, phase) {
+  const t = ((phase % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  switch (type) {
+    case 'stenotic':
+      if (t < 0.18) return t / 0.18;
+      if (t < 0.4) return 1 - (t - 0.18) / 0.22 * 1.45;
+      if (t < 0.52) return -0.45 + (t - 0.4) / 0.12 * 0.7;
+      if (t < 0.7) return 0.25 + Math.sin((t - 0.52) / 0.18 * Math.PI) * 0.2;
+      return 0.12 - (t - 0.7) / (2 * Math.PI - 0.7) * 0.12;
+    case 'high_resist':
+      if (t < 0.22) return t / 0.22;
+      if (t < 0.38) return 1 - (t - 0.22) / 0.16 * 1.6;
+      if (t < 0.5) return -0.6 + (t - 0.38) / 0.12 * 0.65;
+      return 0.02 - (t - 0.5) / (2 * Math.PI - 0.5) * 0.04;
+    case 'avf':
+      if (t < 0.28) return t / 0.28;
+      if (t < 0.7) return 1 - (t - 0.28) / 0.42 * 0.45;
+      return 0.55 + Math.sin((t - 0.7) / (2 * Math.PI - 0.7) * Math.PI * 0.7) * 0.1;
+    default:
+      return getLimbWaveY(type, phase);
+  }
+}
+
+function updateSim() {
+  const type = document.getElementById('sim-type').value;
+  const sten = +document.getElementById('sim-stenosis').value;
+  const hr = +document.getElementById('sim-hr').value;
+  document.getElementById('sim-sten-out').textContent = sten + '%';
+  document.getElementById('sim-hr-out').textContent = hr;
+
+  const p = JSON.parse(JSON.stringify(simPresets[type]));
+  // stenosis modulation
+  const stenMod = sten / 100;
+  if (type === 'limb' || type === 'stenosis50') {
+    p.psv = Math.round(p.psv + stenMod * 120);
+    p.at = Math.round(p.at + stenMod * 50);
+    if (sten > 40 && p.wftype === '三相波') p.wftype = '雙相波';
+    if (sten > 70) { p.wftype = '單相波'; p.wf = 'monophasic'; }
+  }
+
+  document.getElementById('sim-label').textContent = p.label + (sten > 0 ? '（近端狹窄 ' + sten + '%）' : '');
+  document.getElementById('sim-psv').textContent = p.psv;
+  const edvDisp = p.edv;
+  document.getElementById('sim-edv').textContent = edvDisp;
+  document.getElementById('sim-edv').style.color = edvDisp < 0 ? 'var(--amber)' : 'var(--green)';
+  document.getElementById('sim-ri').textContent = p.ri.toFixed(2);
+  document.getElementById('sim-ri').style.color = p.ri > 1.0 ? 'var(--amber)' : 'var(--green)';
+  document.getElementById('sim-wftype').textContent = p.wftype;
+  document.getElementById('sim-at').textContent = p.at;
+  document.getElementById('sim-at').style.color = p.at > 100 ? 'var(--red)' : 'var(--green)';
+
+  const canvas = document.getElementById('sim-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const hrCycles = Math.round(hr / 60 * 3.5);
+  const cycles = Math.max(3, hrCycles);
+  let colorHex = '#00e5a0';
+  if (p.wf === 'monophasic') colorHex = '#ef4444';
+  else if (p.wf === 'biphasic') colorHex = '#f59e0b';
+  ctx.strokeStyle = colorHex;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = colorHex;
+  ctx.shadowBlur = 10;
+  ctx.beginPath();
+  const pts = cycles * 120;
+  for (let i = 0; i <= pts; i++) {
+    const x = (i / pts) * W;
+    const phase = (i / 120) * 2 * Math.PI;
+    const y = H * 0.55 - getLimbWaveYEx(p.wf, phase) * (H * 0.44);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = '#1a2235';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([3, 6]);
+  ctx.beginPath(); ctx.moveTo(0, H * 0.55); ctx.lineTo(W, H * 0.55); ctx.stroke();
+  ctx.setLineDash([]);
+}
+setTimeout(updateSim, 200);
+
+// ═══════════════════════════════════════
+//  CASE TOGGLE
+// ═══════════════════════════════════════
+function toggleCase(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════
+//  QUIZ
+// ═══════════════════════════════════════
+const quizData = [
+  {
+    q: '右側 ICA PSV = 245 cm/s，EDV = 92 cm/s，ICA/CCA ratio = 3.8。最符合哪一分級？',
+    opts: ['正常（<50% 狹窄）','50–69% 狹窄','≥70% 狹窄（非閉塞）','完全閉塞'],
+    ans: 2,
+    exp: 'PSV 245（>230）、EDV 92（>100 接近邊界，但 PSV 已確定）、ratio 3.8（介於 2–4 之間）。PSV 和 EDV 均符合 ≥70% 標準（EDV 的門檻是 >100，此例 92 接近但 PSV 已超標）。正確答案是 ≥70% 狹窄。'
+  },
+  {
+    q: '股動脈超音波發現狹窄處 PSV = 320 cm/s，狹窄近端 CFA PSV = 75 cm/s。PSV 比值為多少，對應哪種狹窄分級？',
+    opts: ['比值 2.1 → <50% 狹窄','比值 4.3 → ≥75% 狹窄','比值 2.4 → 50–74% 狹窄','比值 1.5 → 正常'],
+    ans: 1,
+    exp: '320 ÷ 75 = 4.27，≥4.0 對應 ≥75% 狹窄。同時應觀察狹窄遠端波形是否出現 tardus-parvus（AT>100 ms），以確認血流動力學顯著狹窄。'
+  },
+  {
+    q: '以下哪一項描述的是「近全閉塞（Near-Occlusion）」的超音波特徵？',
+    opts: ['ICA PSV 極高（>300 cm/s），EDV 極高','ICA PSV 意外偏低，Power Doppler 顯示細小殘餘管腔，同側 CCA 呈高阻力','ICA 完全無訊號，CCA 正常波形','ICA PSV 125–230 cm/s，EDV 40–100 cm/s'],
+    ans: 1,
+    exp: '近全閉塞（String Sign）的陷阱在於：管腔幾乎閉合，流量極低，導致 PSV 反而偏低。CCA 因遠端出口近乎消失而呈高阻力波形（EDV 接近零或逆向）。Power Doppler 是確認殘餘涓流的關鍵工具。'
+  },
+  {
+    q: '正常肢體動脈三相波（triphasic waveform）的三個成分依序為？',
+    opts: ['前向↑ → 逆向↓ → 低幅前向↑','前向↑ → 靜止 → 前向↑','逆向↓ → 前向↑ → 靜止','前向↑ → 前向↑（第二峰）→ 逆向↓'],
+    ans: 0,
+    exp: '三相波：① 快速收縮期前向血流（主峰） → ② 短暫舒張早期逆向血流（反映血管彈性回縮）→ ③ 低幅舒張期前向波。逆向成分消失代表血管彈性降低或近端阻塞，形成雙相波。'
+  },
+  {
+    q: '患者雙上肢血壓差 22 mmHg，左椎動脈超音波顯示收縮期逆流、舒張期前向血流。最可能的診斷是？',
+    opts: ['左 ICA 重度狹窄','左鎖骨下動脈近端狹窄/閉塞（Stage 2 Subclavian Steal）','左椎動脈先天逆流變異','左側心輸出量降低'],
+    ans: 1,
+    exp: '雙上肢血壓差 >15–20 mmHg + 同側椎動脈方向異常（收縮期逆流）= Subclavian Steal Stage 2。左鎖骨下動脈近端阻塞後，左上肢依靠逆向利用椎動脈血流補充。完全竊血（Stage 3）為全期逆流。'
+  },
+  {
+    q: '腹股溝穿刺後腫塊，超音波彩色血流顯示「Yin-Yang sign」，頸部頻譜顯示「To-and-Fro pattern」。最可能的診斷？',
+    opts: ['動靜脈廔管（AVF）','股動脈血腫','假性動脈瘤（Pseudoaneurysm）','淋巴結腫大'],
+    ans: 2,
+    exp: 'Yin-Yang sign（囊內雙向渦流，紅藍各半）+ To-and-Fro pattern（頸部收縮期進入、舒張期回流）是假性動脈瘤的典型表現。AVF 的特徵是靜脈動脈化高速低阻力波形，而非 To-and-Fro。'
+  },
+  {
+    q: '關於都卜勒角度校正，以下哪一項陳述正確？',
+    opts: ['角度越大，測量值越準確','角度應固定在 90° 以取得最強訊號','臨床上使用角度應 ≤60°，超過後 cos θ 急劇下降導致嚴重低估','角度 0° 時測量值為零，不應使用'],
+    ans: 2,
+    exp: 'Doppler 方程式：fd = 2·f₀·v·cos θ / c。cos 60° = 0.5（可接受），cos 70° = 0.34（低估 32%），cos 80° = 0.17（低估 66%）。角度 0° 時 cos 0° = 1，理論上最佳，但實際掃描幾乎不可能達到且難以對準血管。≤60° 是臨床標準。'
+  },
+  {
+    q: '患者膕動脈以下出現 Tardus-Parvus 波形（AT 142 ms），最可能的近端病變位置是？',
+    opts: ['脛動脈閉塞','SFA 中段重度狹窄或閉塞','CFA 輕度狹窄','正常變異，無臨床意義'],
+    ans: 1,
+    exp: 'Tardus-Parvus（AT>100 ms）是近端顯著狹窄（≥75%）或閉塞傳至遠端的間接效應。膕動脈以下出現此波形，近端病變最常見於 SFA（特別是 Hunter\'s Canal 處），而非脛動脈本身。應回頭仔細掃描 SFA 全段。'
+  },
+];
+
+let quizAnswered = new Array(quizData.length).fill(false);
+let quizScore = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.innerHTML = `
+      <div class="quiz-stem"><span style="font-family:var(--mono);color:var(--muted);font-size:11px;margin-right:8px;">Q${qi + 1}</span>${q.q}</div>
+      <div class="quiz-opts">
+        ${q.opts.map((o, oi) => `<button class="quiz-opt" onclick="answerQuiz(${qi},${oi},this)">${String.fromCharCode(65 + oi)}. ${o}</button>`).join('')}
+      </div>
+      <div class="quiz-explain" id="qex-${qi}"><strong style="color:var(--blue);">解析：</strong> ${q.exp}</div>
+    `;
+    container.appendChild(div);
+  });
+  updateQuizScore();
+}
+
+function answerQuiz(qi, oi, btn) {
+  if (quizAnswered[qi]) return;
+  quizAnswered[qi] = true;
+  const q = quizData[qi];
+  const opts = btn.closest('.quiz-opts').querySelectorAll('.quiz-opt');
+  opts.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('correct');
+  });
+  if (oi !== q.ans) btn.classList.add('wrong');
+  else quizScore++;
+  document.getElementById('qex-' + qi).classList.add('show');
+  updateQuizScore();
+}
+
+function updateQuizScore() {
+  const answered = quizAnswered.filter(Boolean).length;
+  document.getElementById('q-score').textContent = quizScore;
+  document.getElementById('q-total').textContent = answered;
+  document.getElementById('q-score').style.color = quizScore === answered && answered > 0 ? 'var(--green)' : 'var(--amber)';
+}
+
+function resetQuiz() {
+  quizAnswered = new Array(quizData.length).fill(false);
+  quizScore = 0;
+  buildQuiz();
+}
+
+buildQuiz();
+
+// ═══════════════════════════════════════
+//  RESPONSIVE CANVAS SIZING
+// ═══════════════════════════════════════
+window.addEventListener('resize', () => {
+  drawCarotidWave();
+  drawLimbWaveforms();
+  updateSim();
+});
+</script>
+</body>
+</html>
